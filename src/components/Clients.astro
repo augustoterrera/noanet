@@ -1,0 +1,87 @@
+---
+const clients = [
+  { src: '/assets/clients/trapani.svg',                  alt: 'Trapani' },
+  { src: '/assets/clients/agro-alianza.png',             alt: 'Agro Alianza' },
+  { src: '/assets/clients/los-balances-SA.png',          alt: 'Los Balcanes S.A.',              imgClass: 'h-20 w-auto object-contain max-w-[180px]' },
+  { src: '/assets/clients/integral-rrhh.png',            alt: 'Integral Recursos Humanos' },
+  { src: '/assets/clients/Azucarera-Justiniano-Frias.png', alt: 'S.A. Azucarera Justiniano Frías', imgClass: 'h-20 w-auto object-contain max-w-[180px]' },
+  { src: '/assets/clients/CITROMAX.png',                 alt: 'Citromax' },
+  { src: '/assets/clients/argenti-lemon.png',            alt: 'Argenti Lemon' },
+  { src: '/assets/clients/fpm.png',                      alt: 'FPM' },
+  { src: '/assets/clients/grupo-mp.svg',                 alt: 'Grupo MP', label: 'GRUPO MP' },
+  { src: '/assets/clients/logo-uspt.svg',                alt: 'USP-T' },
+];
+---
+
+<div class="clients-marquee-wrap relative overflow-hidden py-3" style="width: 100vw; left: 50%; transform: translateX(-50%); mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
+  <div class="clients-track flex items-center gap-10 w-max">
+    {[...clients, ...clients].map((c, i) => (
+      <>
+        <div
+          class="clients-item shrink-0 flex items-center justify-center h-14 px-3"
+          aria-hidden={i >= clients.length ? 'true' : undefined}
+        >
+          <img
+            src={c.src}
+            alt={c.alt}
+            class={`${c.imgClass ?? 'h-14 w-auto object-contain max-w-[180px]'}${c.src.includes('logo-uspt') ? ' uspt-logo' : ''}`}
+            loading="lazy"
+          />
+          {c.label && (
+            <span class="ml-2 text-sm font-bold tracking-widest whitespace-nowrap text-[var(--fg-muted)]">
+              {c.label}
+            </span>
+          )}
+        </div>
+        <span class="clients-sep shrink-0 text-[var(--border-strong)] select-none" aria-hidden="true">|</span>
+      </>
+    ))}
+  </div>
+</div>
+
+<style>
+  .clients-track {
+    animation: marquee 40s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .clients-item {
+    opacity: 0.75;
+    transition: opacity 300ms linear;
+  }
+  .clients-item:hover {
+    opacity: 1;
+  }
+
+  .clients-sep {
+    font-size: 1.25rem;
+    opacity: 0.45;
+    user-select: none;
+  }
+
+  :global([data-theme="dark"]) .uspt-logo {
+    filter: brightness(0) invert(1);
+  }
+</style>
+
+<script>
+  (() => {
+    const track = document.querySelector<HTMLElement>('.clients-track');
+    if (!track) return;
+
+    function applyOffset() {
+      // Round to nearest integer to avoid sub-pixel seam at loop point
+      const half = Math.round(track!.scrollWidth / 2);
+      track!.style.setProperty('--marquee-offset', `-${half}px`);
+    }
+
+    if (document.readyState === 'complete') {
+      applyOffset();
+    } else {
+      window.addEventListener('load', applyOffset, { once: true });
+    }
+  })();
+</script>

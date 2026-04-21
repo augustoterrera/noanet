@@ -1,0 +1,101 @@
+---
+const modules = [
+  {
+    tag: '01',
+    label: 'Base',
+    title: 'Administración de Personal',
+    desc: 'El expediente completo de cada empleado, siempre actualizado. Nómina, datos personales, formularios y certificados en un solo lugar — sin papeles, sin redundancias.',
+    features: ['Nómina de empleados', 'Datos personales', 'Formularios digitales', 'Certificados'],
+  },
+  {
+    tag: '02',
+    label: 'Base',
+    title: 'Control de Asistencia',
+    desc: 'Definí turnos, novedades y vacaciones. Los datos pasan automáticamente a Liquidación de Haberes — sin recargas manuales, sin errores de transcripción.',
+    features: ['Turnos horarios', 'Registro de novedades', 'Gestión de vacaciones', 'Integración con Liquidación'],
+  },
+  {
+    tag: '03',
+    label: '',
+    title: 'Liquidación de Haberes',
+    desc: 'Liquidá sueldos sin errores y en tiempo. Recibos digitales, libros de ley, acreditaciones bancarias y múltiples convenios — todo auditable.',
+    features: ['Recibos de sueldo digitales', 'Libros de ley', 'Acreditaciones bancarias', 'Multiconvenio salarial', 'Libro de sueldo digital'],
+  },
+  {
+    tag: '04',
+    label: '',
+    title: 'Medicina Laboral',
+    desc: 'Cumplí con las obligaciones médicas sin burocracia. Historial del empleado y su grupo familiar, con documentación centralizada y acceso inmediato.',
+    features: ['Historial médico', 'Grupo familiar', 'Documentación centralizada', 'Seguimiento de aptitudes'],
+  },
+  {
+    tag: '05',
+    label: '',
+    title: 'Capacitación',
+    desc: 'Sabé quién capacitó qué y cuándo. Programá, ejecutá y auditá capacitaciones por área o perfil — sin hojas de cálculo.',
+    features: ['Programación de cursos', 'Seguimiento por empleado', 'Capacitación por perfil', 'Auditoría completa'],
+  },
+  {
+    tag: '06',
+    label: 'Autogestión',
+    title: 'Portal de Autogestión',
+    desc: 'El colaborador solicita licencias, descarga sus recibos de sueldo y consulta sus datos sin intermediarios. Menos carga operativa para RRHH, más autonomía para cada empleado.',
+    features: ['Solicitud de licencias', 'Descarga de recibos', 'Consulta de datos personales', 'Sin intermediarios'],
+  },
+];
+---
+
+<section class="section" id="modulos">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="section-eyebrow">Módulos</span>
+      <h2 class="h2">Empezá con lo que necesitás. <span class="accent">Escalá cuando quieras.</span></h2>
+      <p class="section-sub max-w-lg mx-auto">Seis módulos integrados que comparten datos y se activan según lo que tu empresa requiera. Sin duplicar información, sin sistemas paralelos.</p>
+    </div>
+
+    <div class="divide-y divide-[var(--border)]">
+      {modules.map((m, i) => (
+        <div class="module-row py-14 nav:py-20 grid nav:grid-cols-2 gap-8 nav:gap-16 items-start">
+
+          <!-- Izquierda: número + título -->
+          <div>
+            <div class="flex items-center gap-2 mb-5">
+              <span class="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--fg-dim)]">{m.tag}</span>
+              {m.label && (
+                <span class="text-[11px] font-semibold tracking-[0.06em] uppercase px-2 py-[3px] rounded-full border border-[var(--border)] text-[var(--accent)]">{m.label}</span>
+              )}
+            </div>
+            <h3 class="font-display text-[clamp(28px,4vw,42px)] font-bold tracking-[-0.03em] leading-[1.1] text-[var(--fg)]">
+              {m.title}
+            </h3>
+          </div>
+
+          <!-- Derecha: descripción + sub-features -->
+          <div class="flex flex-col gap-8">
+            <p class="text-[17px] leading-[1.65] text-[var(--fg-muted)]">{m.desc}</p>
+
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-[10px]">
+              {m.features.map((f, fi) => (
+                <div class="flex items-baseline gap-2">
+                  <dt class="text-[12px] font-semibold tabular-nums text-[var(--fg-dim)] shrink-0">
+                    {m.tag}.{String(fi + 1).padStart(1, '0')}
+                  </dt>
+                  <dd class="text-[13px] text-[var(--fg-muted)]">{f}</dd>
+                </div>
+              ))}
+            </dl>
+
+            {/* Agregar imagen aquí cuando esté disponible:
+            <div class="rounded-2xl overflow-hidden border border-[var(--border)]">
+              <img src={`/images/modules/${m.tag}.png`} alt={m.title} class="w-full" />
+            </div>
+            */}
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
