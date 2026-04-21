@@ -1,0 +1,126 @@
+---
+---
+
+<section class="hero relative isolate overflow-hidden">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div class="container hero-inner">
+    <!-- Headline -->
+    <h1 class="hero-title font-display font-extrabold tracking-[-0.04em] leading-[1.02]">
+      Tu RRHH completo,<br>
+      <span class="hero-accent">en un solo sistema.</span>
+    </h1>
+
+    <!-- Bottom bar -->
+    <div class="hero-bottom">
+      <p class="hero-sub text-[var(--fg-muted)] leading-[1.65] max-w-[480px]">
+        Legajo digital, liquidación de haberes, asistencia, medicina laboral y capacitaciones — modular, multiconvenio y con auditoría total.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#modulos" class="hero-link">
+          Ver módulos
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contacto" class="btn btn-primary">
+          Solicitar una demo
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 82vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-top: 8rem;
+    padding-bottom: 7rem;
+    gap: 2.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(48px, 7.5vw, 92px);
+    max-width: 16ch;
+  }
+
+  .hero-accent {
+    color: var(--accent);
+  }
+  [data-theme="light"] .hero-accent {
+    color: var(--g-plum-600);
+  }
+
+  .hero-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  @media (min-width: 900px) {
+    .hero-bottom {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 1.3vw, 18px);
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--fg-muted);
+    transition: color 0.2s ease;
+  }
+  .hero-link:hover {
+    color: var(--fg);
+  }
+
+  /* Background grid */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center top;
+    mask-image: radial-gradient(ellipse 100% 80% at 50% 20%, #000 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 20%, #000 30%, transparent 80%);
+  }
+
+  /* Glow */
+  .hero-glow {
+    position: absolute;
+    inset: -20% 0 auto 0;
+    height: 60%;
+    z-index: -1;
+    background: var(--glow);
+    pointer-events: none;
+    opacity: 0.7;
+  }
+</style>

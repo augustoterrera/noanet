@@ -1,0 +1,67 @@
+---
+const reasons = [
+  {
+    num: '01',
+    title: 'Modular y escalable',
+    desc: 'Comenzá con los módulos base y sumá los siguientes cuando tu empresa lo necesite. Sin rehacer nada.',
+  },
+  {
+    num: '02',
+    title: 'Multiconvenio y multiempresa',
+    desc: 'Pensado para grupos empresarios o compañías con distintas actividades y convenios colectivos en paralelo.',
+  },
+  {
+    num: '03',
+    title: 'Máxima seguridad, 100% confiable',
+    desc: 'Infraestructura segura, backups automáticos y controles de acceso granulares por usuario y por módulo.',
+  },
+  {
+    num: '04',
+    title: 'Auditoría total',
+    desc: 'Identificá el accionar de cada usuario al detalle: qué cambió, cuándo y quién lo hizo.',
+  },
+  {
+    num: '05',
+    title: 'Amigable y fácil de usar',
+    desc: 'Interfaz gráfica diseñada para agilizar los procesos, con curva de aprendizaje corta para nuevos usuarios.',
+  },
+  {
+    num: '06',
+    title: 'Información gerencial en tiempo real',
+    desc: 'Dashboards e informes a medida para tomar decisiones con datos actualizados, no con reportes de hace un mes.',
+  },
+  {
+    num: '07',
+    title: 'Autogestión del colaborador',
+    desc: 'Tus empleados solicitan licencias, certificados y consultan recibos sin pasar por RRHH.',
+  },
+];
+---
+
+<section class="section border-t border-b border-[var(--border)] bg-[var(--bg-elev)]" id="razones">
+  <div class="container">
+    <div class="grid grid-cols-1 nav:grid-cols-2 gap-20 nav:gap-[80px] items-start">
+
+      <!-- Sticky left column -->
+      <div class="nav:sticky nav:top-[120px]">
+        <span class="section-eyebrow text-left">Por qué Gesper</span>
+        <h2 class="h2 text-left">Diseñado para <span class="accent">crecer con tu empresa.</span></h2>
+        <p class="section-sub text-left">Más de 20 años gestionando recursos humanos en empresas de Argentina. Gesper evoluciona con vos.</p>
+      </div>
+
+      <!-- Reasons list -->
+      <div class="flex flex-col gap-1">
+        {reasons.map((r) => (
+          <div class="grid grid-cols-[48px_1fr] gap-5 items-start py-7 border-b border-[var(--border)] last:border-b-0">
+            <span class="font-display text-sm font-bold tracking-[0.02em] text-[var(--accent)]">{r.num}</span>
+            <div>
+              <h4 class="text-[19px] font-bold tracking-[-0.015em] mb-[6px]">{r.title}</h4>
+              <p class="text-[14.5px] leading-[1.55] text-[var(--fg-muted)] m-0">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>
