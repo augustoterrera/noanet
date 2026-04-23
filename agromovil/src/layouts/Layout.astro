@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Agromovil — Software Agropecuario',
+  description = 'Agromovil digitaliza la producción agropecuaria y el control de personal en campo. Funciona offline y sincroniza con Gesper para cerrar el ciclo de RRHH.',
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600;1,700&family=Mulish:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Prevent FOUC: aplica tema guardado antes del primer paint -->
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('agromovil-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+      })();
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,168 @@
+---
+const marqueeItems = [
+  { icon: 'M20 6L9 17l-5-5', label: 'Funciona offline en campo' },
+  { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', label: 'Integrado con Gesper RRHH' },
+  { icon: 'M3 3v18h18 M7 15l4-4 4 4 5-5', label: 'Información en tiempo real' },
+  { icon: 'M9 9h6v6H9z', label: 'Multiestablecimiento', rect: true },
+  { icon: 'M12 6v6l4 2', label: 'Trazabilidad completa', circle: true },
+  { icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z', label: 'Soporte local Argentina' },
+  { icon: 'M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z M14 2v6h6M16 13H8M16 17H8M10 9H8', label: 'Sin doble carga de datos' },
+];
+---
+<section class="py-[120px] relative overflow-hidden" id="contacto">
+  <!-- Features marquee -->
+  <div class="marquee-wrap group relative overflow-hidden py-2 mb-16" style="width: 100vw; left: 50%; transform: translateX(-50%); mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
+    <div
+      class="flex gap-12 w-max text-[13px] text-[var(--fg-dim)] group-hover:[animation-play-state:paused]"
+      style="animation: marquee 40s linear infinite; will-change: transform;"
+    >
+      {[...marqueeItems, ...marqueeItems].map((item, i) => (
+        <span class="inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0" aria-hidden={i >= marqueeItems.length ? 'true' : undefined}>
+          <svg class="w-[14px] h-[14px] text-[var(--accent)] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            {item.rect
+              ? <><rect x="3" y="3" width="18" height="18" rx="2"/><path d={item.icon}/></>
+              : item.circle
+              ? <><circle cx="12" cy="12" r="10"/><path d={item.icon}/></>
+              : <path d={item.icon}/>
+            }
+          </svg>
+          {item.label}
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="contact-wrap relative grid grid-cols-1 nav:grid-cols-[1fr_1.1fr] gap-[72px] max-nav:gap-12 items-start p-[72px] max-nav:px-7 max-nav:py-12 rounded-[28px] border border-[var(--border)] overflow-hidden">
+
+      <!-- Background grid overlay -->
+      <div class="contact-grid-bg"></div>
+
+      <!-- Left: info -->
+      <div class="relative">
+        <span class="section-eyebrow">Contacto</span>
+        <h2 class="h2 text-left">Hablemos de tu <span class="accent">campo.</span></h2>
+        <p class="text-[17px] text-[var(--fg-muted)] leading-[1.55] mb-8">
+          Completá el formulario y te contactamos en menos de 24 horas hábiles para coordinar una demo de Agromovil adaptada a tu establecimiento.
+        </p>
+
+        <ul class="flex flex-col gap-[14px] mb-10 p-0 list-none">
+          {[
+            'Demo personalizada a tu tipo de producción',
+            'Asesoramiento sobre integración con Gesper',
+            'Propuesta comercial sin compromiso',
+          ].map((perk) => (
+            <li class="flex items-center gap-3 text-[15px] text-[var(--fg)]">
+              <svg class="w-[18px] h-[18px] p-1 box-content rounded-full text-[var(--accent)] flex-shrink-0" style="background: color-mix(in srgb, var(--g-lime, #a8f53d) 15%, transparent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                <path d="M20 6L9 17l-5-5"/>
+              </svg>
+              {perk}
+            </li>
+          ))}
+        </ul>
+
+        <div class="flex flex-col gap-[10px] pt-6 border-t border-[var(--border)]">
+          <a href="mailto:info@noanet.com.ar" class="inline-flex items-center gap-[10px] text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">
+            <svg class="w-4 h-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+            info@noanet.com.ar
+          </a>
+          <a href="tel:+5493814000000" class="inline-flex items-center gap-[10px] text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">
+            <svg class="w-4 h-4 text-[var(--accent)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.8 12.8 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.8 12.8 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            +54 9 381 400 0000
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <form
+        id="contactForm"
+        class="relative bg-[var(--bg)] border border-[var(--border)] rounded-[20px] p-9 max-nav:p-6 flex flex-col gap-[18px]"
+      >
+        <div class="form-field">
+          <input type="text" name="name" required placeholder="Nombre y apellido" />
+        </div>
+        <div class="form-field">
+          <input type="text" name="company" required placeholder="Empresa / Establecimiento" />
+        </div>
+        <div class="grid grid-cols-2 gap-4 max-xs:grid-cols-1">
+          <div class="form-field">
+            <input type="tel" name="phone" required placeholder="Teléfono" />
+          </div>
+          <div class="form-field">
+            <input type="email" name="email" required placeholder="Correo electrónico" />
+          </div>
+        </div>
+        <div class="form-field">
+          <textarea name="message" rows="4" placeholder="Contanos sobre tu campo y operación"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary self-start mt-2">
+          Enviar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div id="formSuccess" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, #a8f53d 12%, transparent); border: 1px solid color-mix(in srgb, #a8f53d 30%, transparent); color: #a8f53d;">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          ¡Gracias! Te contactamos en menos de 24 horas.
+        </div>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-wrap {
+    background:
+      radial-gradient(circle at 0% 0%, color-mix(in srgb, #356b36 25%, transparent), transparent 50%),
+      radial-gradient(circle at 100% 100%, color-mix(in srgb, #a8f53d 8%, transparent), transparent 55%),
+      var(--bg-elev);
+  }
+  .contact-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  /* Form inputs */
+  .form-field input,
+  .form-field textarea {
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--fg);
+    background: var(--bg-elev-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: var(--fg-dim); }
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, #a8f53d 15%, transparent);
+  }
+</style>
+
+<script>
+  const form = document.getElementById('contactForm') as HTMLFormElement;
+  const success = document.getElementById('formSuccess')!;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    form.querySelectorAll<HTMLElement>('input, textarea, button').forEach(el => {
+      (el as HTMLInputElement).disabled = true;
+    });
+    (form.querySelector('.btn') as HTMLElement).style.display = 'none';
+    success.classList.remove('hidden');
+    success.classList.add('flex');
+  });
+</script>

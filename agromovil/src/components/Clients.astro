@@ -1,0 +1,36 @@
+---
+const clients = [
+  { src: '/assets/clients/trapani.svg',         alt: 'Trapani',         cls: 'h-9 w-auto' },
+  { src: '/assets/clients/diagonal-citrus-recortada.png', alt: 'Diagonal Citrus', cls: 'h-12 w-auto' },
+  { src: '/assets/clients/argenti-lemon.png',   alt: 'Argenti Lemon',   cls: 'h-12 w-auto' },
+  { src: '/assets/clients/grupo-mp.svg',        alt: 'Grupo MP',        cls: 'h-12 w-auto', label: 'GRUPO MP' },
+];
+---
+
+<div class="clients-static flex items-center justify-center flex-wrap gap-12 py-3 px-8">
+  {clients.map((c) => (
+    <div class="clients-item shrink-0 flex items-center justify-center px-3">
+      <img
+        src={c.src}
+        alt={c.alt}
+        class={`${c.cls} object-contain`}
+        loading="lazy"
+      />
+      {c.label && (
+        <span class="ml-2 text-sm font-bold tracking-widest whitespace-nowrap text-[var(--fg-muted)]">
+          {c.label}
+        </span>
+      )}
+    </div>
+  ))}
+</div>
+
+<style>
+  .clients-item {
+    opacity: 0.75;
+    transition: opacity 300ms linear;
+  }
+  .clients-item:hover {
+    opacity: 1;
+  }
+</style>

@@ -1,0 +1,1459 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gesper — Software de Recursos Humanos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- Mulish como stand-in de Museo Sans (humanista, proporciones similares) -->
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* Brand */
+    --g-plum-950: #1a0a1f;
+    --g-plum-900: #2a0e2f;
+    --g-plum-800: #3e1545;
+    --g-plum-700: #5a1a63;
+    --g-plum-600: #6b1f75;
+    --g-plum-500: #7a2288; /* principal */
+    --g-plum-400: #9d4aab;
+    --g-plum-300: #bd7ec9;
+    --g-plum-200: #dbb5e1;
+    --g-plum-100: #efdff2;
+    --g-plum-50:  #f9f2fb;
+
+    --g-coral: #ef3d3a;
+    --g-coral-bright: #ff5754;
+    --g-coral-soft: #ffe4e3;
+
+    /* Neutrals */
+    --ink-0:   #ffffff;
+    --ink-50:  #fafafa;
+    --ink-100: #f3f3f5;
+    --ink-200: #e7e7ec;
+    --ink-300: #cbcbd3;
+    --ink-400: #9b9ba6;
+    --ink-500: #6b6b76;
+    --ink-600: #4a4a53;
+    --ink-700: #303038;
+    --ink-800: #1b1b22;
+    --ink-900: #0f0f14;
+    --ink-950: #07070a;
+
+    /* Font */
+    --font-display: 'Mulish', 'Museo Sans', system-ui, -apple-system, sans-serif;
+    --font-body: 'Mulish', 'Museo Sans', system-ui, -apple-system, sans-serif;
+
+    /* Theme — dark by default */
+    --bg: var(--ink-950);
+    --bg-elev: #0d0d12;
+    --bg-elev-2: #15151c;
+    --fg: var(--ink-0);
+    --fg-muted: #a6a6b0;
+    --fg-dim: #6b6b76;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
+    --grid: rgba(255,255,255,0.04);
+    --accent: var(--g-plum-400);
+    --accent-2: var(--g-coral-bright);
+    --btn-primary-bg: var(--g-plum-500);
+    --btn-primary-fg: #fff;
+    --btn-primary-hover: var(--g-plum-400);
+    --btn-ghost-border: rgba(255,255,255,0.18);
+    --glow: radial-gradient(circle at 50% 0%, rgba(157,74,171,0.35), transparent 55%);
+    --card: rgba(255,255,255,0.025);
+    --card-hover: rgba(255,255,255,0.045);
+    --logo-invert: 1; /* invert color logo for dark bg */
+  }
+
+  [data-theme="light"] {
+    --bg: #fbf9fb;
+    --bg-elev: #ffffff;
+    --bg-elev-2: #f3eff4;
+    --fg: #14091a;
+    --fg-muted: #5a4d62;
+    --fg-dim: #8a7d92;
+    --border: rgba(20,9,26,0.08);
+    --border-strong: rgba(20,9,26,0.16);
+    --grid: rgba(122,34,136,0.06);
+    --accent: var(--g-plum-500);
+    --accent-2: var(--g-coral);
+    --btn-primary-bg: var(--g-plum-500);
+    --btn-primary-fg: #fff;
+    --btn-primary-hover: var(--g-plum-600);
+    --btn-ghost-border: rgba(20,9,26,0.15);
+    --glow: radial-gradient(circle at 50% 0%, rgba(122,34,136,0.12), transparent 55%);
+    --card: #ffffff;
+    --card-hover: #faf5fb;
+    --logo-invert: 0;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv11";
+    line-height: 1.5;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  a { color: inherit; text-decoration: none; }
+  img { max-width: 100%; display: block; }
+
+  .container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* ===== NAV ===== */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo img { height: 26px; width: auto; filter: none; }
+  [data-theme="dark"] .nav-logo img,
+  :root:not([data-theme]) .nav-logo img { filter: brightness(0) invert(1) opacity(0.95); }
+  /* actually, let's keep the real colored logo on both, the violet reads on both */
+  .nav-logo img { filter: none !important; }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+  }
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    transition: color 0.15s ease;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Theme toggle */
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--fg);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.15s ease;
+  }
+  .theme-toggle:hover { border-color: var(--border-strong); background: var(--card); }
+  .theme-toggle svg { width: 18px; height: 18px; }
+  [data-theme="light"] .theme-toggle .icon-sun { display: none; }
+  [data-theme="light"] .theme-toggle .icon-moon { display: block; }
+  .theme-toggle .icon-sun { display: block; }
+  .theme-toggle .icon-moon { display: none; }
+
+  /* ===== BUTTONS ===== */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 46px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--btn-primary-fg);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.12) inset, 0 8px 24px -8px rgba(122,34,136,0.5);
+  }
+  .btn-primary:hover {
+    background: var(--btn-primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.14) inset, 0 12px 28px -8px rgba(122,34,136,0.55);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--btn-ghost-border);
+  }
+  .btn-ghost:hover { border-color: var(--border-strong); background: var(--card); }
+  .btn-sm { height: 38px; padding: 0 16px; font-size: 14px; }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    padding: 96px 0 120px;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* grid background */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: center top;
+    mask-image: radial-gradient(ellipse 100% 75% at 50% 30%, #000 40%, transparent 85%);
+    -webkit-mask-image: radial-gradient(ellipse 100% 75% at 50% 30%, #000 40%, transparent 85%);
+  }
+  .hero-glow {
+    position: absolute;
+    inset: -20% 0 auto 0;
+    height: 70%;
+    z-index: -1;
+    background: var(--glow);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 14px 6px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fg-muted);
+    margin-bottom: 28px;
+  }
+  .eyebrow .dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--g-plum-500), var(--g-coral));
+    display: grid; place-items: center; font-size: 10px; color: #fff; font-weight: 700;
+  }
+  .eyebrow strong { color: var(--fg); font-weight: 600; }
+
+  .hero-wrap {
+    text-align: center;
+    max-width: 980px;
+    margin: 0 auto;
+  }
+  .h1 {
+    font-family: var(--font-display);
+    font-size: clamp(44px, 7.2vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    margin: 0 0 28px;
+    text-wrap: balance;
+  }
+  .h1 .accent {
+    background: linear-gradient(135deg, var(--g-plum-400), var(--g-coral-bright));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-style: italic;
+    font-weight: 800;
+  }
+  [data-theme="light"] .h1 .accent {
+    background: linear-gradient(135deg, var(--g-plum-600), var(--g-coral));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .h1 .soft { color: var(--fg-muted); font-weight: 600; }
+
+  .hero-sub {
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.55;
+    color: var(--fg-muted);
+    max-width: 620px;
+    margin: 0 auto 40px;
+    text-wrap: pretty;
+  }
+  .hero-cta {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+  .hero-marquee {
+    position: relative;
+    width: 100vw;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    padding: 8px 0;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  }
+  .hero-marquee-track {
+    display: flex;
+    gap: 48px;
+    width: max-content;
+    animation: marquee 40s linear infinite;
+    font-size: 13px;
+    color: var(--fg-dim);
+    will-change: transform;
+  }
+  .hero-marquee:hover .hero-marquee-track { animation-play-state: paused; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .hero-marquee-track .hero-meta-item {
+    flex-shrink: 0;
+  }
+  .hero-meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+  .hero-meta-item svg { width: 14px; height: 14px; color: var(--accent); flex-shrink: 0; }
+
+  /* hero product preview (abstract dashboard bento) */
+  .hero-preview {
+    margin-top: 88px;
+    position: relative;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .preview-frame {
+    position: relative;
+    border: 1px solid var(--border-strong);
+    border-radius: 20px;
+    background: var(--bg-elev);
+    padding: 12px;
+    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+    overflow: hidden;
+  }
+  [data-theme="light"] .preview-frame {
+    box-shadow: 0 40px 80px -30px rgba(122,34,136,0.18), 0 0 0 1px var(--border);
+  }
+
+  .preview-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 6px 14px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .preview-chrome .dots { display: flex; gap: 6px; }
+  .preview-chrome .dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--border-strong); }
+  .preview-chrome .url {
+    margin-left: 10px;
+    font-size: 12px;
+    color: var(--fg-dim);
+    padding: 5px 12px;
+    background: var(--card);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 12px;
+    min-height: 420px;
+  }
+  .preview-sidebar {
+    background: var(--bg-elev-2);
+    border-radius: 12px;
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .preview-sidebar .side-logo {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px 18px;
+    border-bottom: 1px solid var(--border); margin-bottom: 10px;
+  }
+  .side-logo-mark {
+    width: 22px; height: 22px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--g-plum-500), var(--g-plum-700));
+    display: grid; place-items: center;
+    position: relative;
+  }
+  .side-logo-mark::after {
+    content: ""; width: 0; height: 0;
+    border-left: 5px solid transparent; border-right: 5px solid transparent;
+    border-bottom: 8px solid var(--g-coral);
+  }
+  .side-logo-name { font-weight: 800; font-size: 15px; letter-spacing: -0.02em; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 10px; border-radius: 8px;
+    font-size: 13px; color: var(--fg-muted); font-weight: 500;
+    cursor: default;
+  }
+  .nav-item.active { background: color-mix(in srgb, var(--g-plum-500) 16%, transparent); color: var(--fg); }
+  .nav-item svg { width: 14px; height: 14px; }
+  .nav-item .n { margin-left: auto; font-size: 11px; color: var(--fg-dim); }
+
+  .preview-main {
+    background: var(--bg-elev-2);
+    border-radius: 12px;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto 1fr;
+    gap: 12px;
+  }
+  .pm-header {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 4px;
+  }
+  .pm-header h4 { margin: 0; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; }
+  .pm-header .chip {
+    font-size: 11px; padding: 4px 10px; border-radius: 999px;
+    background: color-mix(in srgb, var(--g-coral) 14%, transparent);
+    color: var(--g-coral);
+    font-weight: 600;
+  }
+  .stat {
+    grid-column: span 4;
+    padding: 14px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .stat .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--fg-dim); font-weight: 600; }
+  .stat .val { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; }
+  .stat .trend { font-size: 11px; color: #2bb673; margin-top: 2px; font-weight: 600; }
+  .stat .trend.neg { color: var(--g-coral); }
+
+  .chart-card {
+    grid-column: span 8;
+    padding: 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .chart-card .ch-title { font-size: 12px; color: var(--fg-muted); font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .chart-card .ch-title span:last-child { color: var(--fg-dim); font-weight: 500; }
+  .chart-card svg { width: 100%; height: 120px; }
+
+  .list-card {
+    grid-column: span 4;
+    padding: 16px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .list-card .lc-title { font-size: 12px; color: var(--fg-muted); font-weight: 600; }
+  .list-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, var(--g-plum-400), var(--g-plum-700)); color: #fff; display: grid; place-items: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+  .list-row .name { font-weight: 600; }
+  .list-row .role { color: var(--fg-dim); margin-left: auto; font-size: 11px; }
+
+  /* ===== SECTION BASE ===== */
+  .section { padding: 112px 0; position: relative; }
+  .section-head { text-align: center; max-width: 720px; margin: 0 auto 64px; }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .h2 {
+    font-family: var(--font-display);
+    font-size: clamp(34px, 4.8vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 800;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  .h2 .accent { color: var(--accent); font-style: italic; }
+  .section-sub {
+    font-size: 18px;
+    color: var(--fg-muted);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  /* ===== MODULES ===== */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+  }
+  .module {
+    grid-column: span 2;
+    padding: 32px 28px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+  }
+  .module:hover {
+    border-color: var(--border-strong);
+    background: var(--card-hover);
+    transform: translateY(-2px);
+  }
+  .module.big { grid-column: span 3; }
+  .module-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--g-plum-500) 16%, transparent);
+    color: var(--accent);
+    display: grid; place-items: center;
+    margin-bottom: 24px;
+  }
+  .module-icon svg { width: 22px; height: 22px; }
+  .module.featured .module-icon {
+    background: color-mix(in srgb, var(--g-coral) 18%, transparent);
+    color: var(--g-coral);
+  }
+  .module h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 10px;
+  }
+  .module p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    margin: 0;
+    flex: 1;
+  }
+  .module-tag {
+    margin-top: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+  }
+
+  /* ===== REASONS ===== */
+  .reasons {
+    background: var(--bg-elev);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .reasons-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .reasons-left { position: sticky; top: 120px; }
+  .reasons-left .section-head { text-align: left; margin: 0; }
+  .reasons-left .section-head .section-eyebrow,
+  .reasons-left .section-head .h2 { text-align: left; }
+
+  .reasons-list { display: flex; flex-direction: column; gap: 4px; }
+  .reason {
+    padding: 28px 4px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .reason:last-child { border-bottom: none; }
+  .reason .num {
+    font-family: var(--font-display);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .reason h4 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 6px;
+  }
+  .reason p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  /* ===== CONTACT SECTION WRAPPER ===== */
+  .cta-section {
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* ===== CONTACT ===== */
+  .contact-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 72px;
+    align-items: start;
+    padding: 72px;
+    border-radius: 28px;
+    border: 1px solid var(--border);
+    background:
+      radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--g-plum-500) 20%, transparent), transparent 50%),
+      radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--g-coral) 12%, transparent), transparent 55%),
+      var(--bg-elev);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-wrap::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .contact-wrap > * { position: relative; }
+
+  .contact-left .section-eyebrow { margin-bottom: 16px; }
+  .contact-left .h2 { text-align: left; margin-bottom: 20px; }
+  .contact-left > p {
+    font-size: 17px;
+    color: var(--fg-muted);
+    line-height: 1.55;
+    margin: 0 0 32px;
+  }
+
+  .contact-perks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .contact-perks li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--fg);
+  }
+  .contact-perks svg {
+    width: 18px; height: 18px;
+    padding: 4px;
+    box-sizing: content-box;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--g-plum-500) 18%, transparent);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .contact-info-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--fg-muted);
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .contact-info-item:hover { color: var(--fg); }
+  .contact-info-item svg { width: 16px; height: 16px; color: var(--accent); }
+
+  .contact-form {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  [data-theme="light"] .contact-form { background: #fff; }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fg-muted);
+    letter-spacing: 0.01em;
+  }
+  .form-field label .optional { color: var(--fg-dim); font-weight: 500; }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: inherit;
+    font-size: 14.5px;
+    color: var(--fg);
+    background: var(--bg-elev-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  [data-theme="light"] .form-field input,
+  [data-theme="light"] .form-field select,
+  [data-theme="light"] .form-field textarea {
+    background: #fbfafc;
+  }
+  .form-field textarea { resize: vertical; min-height: 100px; }
+  .form-field input::placeholder,
+  .form-field textarea::placeholder { color: var(--fg-dim); }
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-plum-500) 18%, transparent);
+  }
+  .form-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239b9ba6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .form-consent .checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--fg-muted);
+    line-height: 1.45;
+    cursor: pointer;
+  }
+  .form-consent input[type="checkbox"] {
+    width: 16px; height: 16px;
+    margin-top: 2px;
+    accent-color: var(--g-plum-500);
+    flex-shrink: 0;
+  }
+  .form-consent a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+  .form-submit { align-self: flex-start; margin-top: 8px; }
+
+  .form-success {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: color-mix(in srgb, #2bb673 14%, transparent);
+    border: 1px solid color-mix(in srgb, #2bb673 35%, transparent);
+    border-radius: 10px;
+    color: #2bb673;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .form-success svg { width: 18px; height: 18px; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 72px 0 40px;
+    background: var(--bg);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 56px;
+  }
+  .footer-brand img { height: 28px; margin-bottom: 16px; }
+  .footer-brand p { font-size: 14px; color: var(--fg-muted); max-width: 280px; line-height: 1.55; margin: 0; }
+  .footer-col h5 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-dim);
+    margin: 0 0 16px;
+  }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: var(--fg-muted); transition: color 0.15s ease; }
+  .footer-col a:hover { color: var(--fg); }
+  .footer-bottom {
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--fg-dim);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* ===== TWEAKS PANEL ===== */
+  .tweaks-panel {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 280px;
+    background: var(--bg-elev);
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+    z-index: 100;
+    display: none;
+    font-size: 13px;
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-panel h6 { margin: 0 0 12px; font-size: 13px; font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+  .tweaks-panel h6 button { background: transparent; border: 0; color: var(--fg-dim); cursor: pointer; font-size: 16px; }
+  .tweak-row { margin-bottom: 14px; }
+  .tweak-row label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--fg-dim); margin-bottom: 6px; font-weight: 600; }
+  .seg { display: flex; background: var(--bg-elev-2); border-radius: 8px; padding: 3px; gap: 2px; }
+  .seg button {
+    flex: 1;
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 0;
+    background: transparent;
+    color: var(--fg-muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .seg button.active { background: var(--bg); color: var(--fg); box-shadow: 0 1px 2px rgba(0,0,0,0.15); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .modules-grid { grid-template-columns: 1fr; }
+    .module, .module.big { grid-column: span 1; }
+    .reasons-layout { grid-template-columns: 1fr; gap: 40px; }
+    .reasons-left { position: static; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .preview-grid { grid-template-columns: 1fr; min-height: auto; }
+    .preview-sidebar { display: none; }
+    .stat, .chart-card, .list-card { grid-column: span 6; }
+    .section { padding: 80px 0; }
+    .hero { padding: 64px 0 80px; }
+    .contact-wrap { grid-template-columns: 1fr; padding: 48px 28px; gap: 48px; }
+    .contact-form { padding: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-meta { gap: 16px; }
+    .stat { grid-column: span 12; }
+    .chart-card, .list-card { grid-column: span 12; }
+    .contact-wrap { padding: 36px 20px; }
+  }
+
+  /* copy variant hiding */
+  .copy-variant { display: none; }
+  .copy-variant.active { display: inline; }
+</style>
+</head>
+<body data-theme="dark">
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">
+      <img src="assets/logo-gesper.png" alt="Gesper" />
+    </a>
+    <nav class="nav-links">
+      <a href="#modulos">Módulos</a>
+      <a href="#razones">Por qué Gesper</a>
+      <a href="#">Clientes</a>
+      <a href="#">Recursos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <a href="#contacto" class="btn btn-primary btn-sm">Solicitar demo</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="container hero-wrap">
+    <span class="eyebrow">
+      <span class="dot">N</span>
+      <span><strong>Noanet</strong> · Software de RRHH</span>
+    </span>
+
+    <h1 class="h1" id="heroH1">
+      El ciclo completo de tus empleados. <span class="accent">En una sola plataforma.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Administrá nóminas, asistencia, medicina laboral y capacitaciones con un sistema modular, multiconvenio y 100% auditable. Pensado para empresas que necesitan cumplir, escalar y tener todo bajo control.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#contacto" class="btn btn-primary">
+        Solicitar una demo
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#modulos" class="btn btn-ghost">Ver módulos</a>
+    </div>
+
+    <div class="hero-marquee" aria-hidden="false">
+      <div class="hero-marquee-track">
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Multiempresa & multiconvenio
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Seguridad y auditoría total
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-5"/></svg>
+          Información en tiempo real
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          Modular y escalable
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Autogestión 24/7
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Soporte local Argentina
+        </span>
+        <span class="hero-meta-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Libro de sueldo digital
+        </span>
+        <!-- duplicate for seamless loop -->
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Multiempresa & multiconvenio
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Seguridad y auditoría total
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 4 4 5-5"/></svg>
+          Información en tiempo real
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+          Modular y escalable
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          Autogestión 24/7
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Soporte local Argentina
+        </span>
+        <span class="hero-meta-item" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+          Libro de sueldo digital
+        </span>
+      </div>
+    </div>
+
+    <!-- Product preview (removed per user request) -->
+    <div class="hero-preview" hidden style="display:none !important;visibility:hidden;height:0;overflow:hidden;">
+      <div class="preview-frame">
+        <div class="preview-chrome">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">app.gesper.com / dashboard</div>
+        </div>
+        <div class="preview-grid">
+          <aside class="preview-sidebar">
+            <div class="side-logo">
+              <span class="side-logo-mark"></span>
+              <span class="side-logo-name">gesper</span>
+            </div>
+            <div class="nav-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              Dashboard
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              Personal <span class="n">1,248</span>
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Asistencia
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+              Liquidación
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              Medicina laboral
+            </div>
+            <div class="nav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Capacitación <span class="n">12</span>
+            </div>
+          </aside>
+          <main class="preview-main">
+            <div class="pm-header">
+              <h4>Resumen · Abril 2026</h4>
+              <span class="chip">12 novedades</span>
+            </div>
+            <div class="stat">
+              <div class="label">Empleados activos</div>
+              <div class="val">1,248</div>
+              <div class="trend">↑ 3.2% vs mar</div>
+            </div>
+            <div class="stat">
+              <div class="label">Liquidado este mes</div>
+              <div class="val">$847M</div>
+              <div class="trend">↑ 1.8%</div>
+            </div>
+            <div class="stat">
+              <div class="label">Ausentismo</div>
+              <div class="val">2.1%</div>
+              <div class="trend neg">↓ 0.4pp</div>
+            </div>
+            <div class="chart-card">
+              <div class="ch-title"><span>Horas trabajadas · últimos 12 meses</span><span>+8.4%</span></div>
+              <svg viewBox="0 0 400 120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--g-plum-400)" stop-opacity="0.5"/>
+                    <stop offset="100%" stop-color="var(--g-plum-400)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,90 L30,75 L60,82 L90,60 L120,68 L150,50 L180,55 L210,38 L240,45 L270,30 L300,35 L330,20 L360,25 L400,18 L400,120 L0,120 Z" fill="url(#chartGrad)"/>
+                <path d="M0,90 L30,75 L60,82 L90,60 L120,68 L150,50 L180,55 L210,38 L240,45 L270,30 L300,35 L330,20 L360,25 L400,18" fill="none" stroke="var(--g-plum-400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="400" cy="18" r="4" fill="var(--g-coral)"/>
+              </svg>
+            </div>
+            <div class="list-card">
+              <div class="lc-title">Solicitudes pendientes</div>
+              <div class="list-row">
+                <div class="avatar">MR</div>
+                <div><div class="name">María R.</div></div>
+                <span class="role">Licencia</span>
+              </div>
+              <div class="list-row">
+                <div class="avatar" style="background:linear-gradient(135deg,#ef3d3a,#b82724);">JL</div>
+                <div><div class="name">Julián L.</div></div>
+                <span class="role">Certificado</span>
+              </div>
+              <div class="list-row">
+                <div class="avatar" style="background:linear-gradient(135deg,#9d4aab,#5a1a63);">AS</div>
+                <div><div class="name">Ana S.</div></div>
+                <span class="role">Vacaciones</span>
+              </div>
+              <div class="list-row">
+                <div class="avatar">PG</div>
+                <div><div class="name">Pablo G.</div></div>
+                <span class="role">Recibo</span>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="section" id="modulos">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Módulos</span>
+      <h2 class="h2">Empezá con lo que necesitás. <span class="accent">Escalá cuando quieras.</span></h2>
+      <p class="section-sub">Cinco módulos integrados que comparten datos y se activan según lo que tu empresa requiera. Sin duplicar información, sin sistemas paralelos.</p>
+    </div>
+
+    <div class="modules-grid">
+      <article class="module big featured">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Administración de Personal</h3>
+        <p>El legajo digital de cada colaborador. Administrá la nómina, datos personales, formularios y certificados desde un único lugar, con historial completo y trazabilidad.</p>
+        <span class="module-tag">01 · Base</span>
+      </article>
+
+      <article class="module big">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h3>Control de Asistencia</h3>
+        <p>Definí turnos horarios, novedades y vacaciones. Los datos viajan automáticamente al módulo de Liquidación de Haberes, sin recargas manuales.</p>
+        <span class="module-tag">02 · Base</span>
+      </article>
+
+      <article class="module">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+        </div>
+        <h3>Liquidación de Haberes</h3>
+        <p>Recibos, libros de ley, acreditaciones bancarias, multiconvenio y libro de sueldo digital.</p>
+        <span class="module-tag">03</span>
+      </article>
+
+      <article class="module">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <h3>Medicina Laboral</h3>
+        <p>Registro médico del empleado y su grupo familiar, con historial y documentación asociada.</p>
+        <span class="module-tag">04</span>
+      </article>
+
+      <article class="module">
+        <div class="module-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h3>Capacitación</h3>
+        <p>Organizá, programá y hacé seguimiento de las capacitaciones de cada área o perfil de empleado.</p>
+        <span class="module-tag">05</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- REASONS -->
+<section class="section reasons" id="razones">
+  <div class="container reasons-layout">
+    <div class="reasons-left">
+      <div class="section-head">
+        <span class="section-eyebrow">Por qué Gesper</span>
+        <h2 class="h2">Diseñado para <span class="accent">crecer con tu empresa.</span></h2>
+        <p class="section-sub">Más de 20 años gestionando recursos humanos en empresas de Argentina. Gesper evoluciona con vos.</p>
+      </div>
+    </div>
+
+    <div class="reasons-list">
+      <div class="reason">
+        <div class="num">01</div>
+        <div>
+          <h4>Modular y escalable</h4>
+          <p>Comenzá con los módulos base y sumá los siguientes cuando tu empresa lo necesite. Sin rehacer nada.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">02</div>
+        <div>
+          <h4>Multiconvenio y multiempresa</h4>
+          <p>Pensado para grupos empresarios o compañías con distintas actividades y convenios colectivos en paralelo.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">03</div>
+        <div>
+          <h4>Máxima seguridad, 100% confiable</h4>
+          <p>Infraestructura segura, backups automáticos y controles de acceso granulares por usuario y por módulo.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">04</div>
+        <div>
+          <h4>Auditoría total</h4>
+          <p>Identificá el accionar de cada usuario al detalle: qué cambió, cuándo y quién lo hizo.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">05</div>
+        <div>
+          <h4>Amigable y fácil de usar</h4>
+          <p>Interfaz gráfica diseñada para agilizar los procesos, con curva de aprendizaje corta para nuevos usuarios.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">06</div>
+        <div>
+          <h4>Información gerencial en tiempo real</h4>
+          <p>Dashboards e informes a medida para tomar decisiones con datos actualizados, no con reportes de hace un mes.</p>
+        </div>
+      </div>
+      <div class="reason">
+        <div class="num">07</div>
+        <div>
+          <h4>Autogestión del colaborador</h4>
+          <p>Tus empleados solicitan licencias, certificados y consultan recibos sin pasar por RRHH.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="cta-section" id="contacto">
+  <div class="container">
+    <div class="contact-wrap">
+      <div class="contact-left">
+        <span class="section-eyebrow">Contacto</span>
+        <h2 class="h2">Hablemos de tu <span class="accent">equipo.</span></h2>
+        <p>Completá el formulario y te contactamos en menos de 24 horas hábiles para coordinar una demo personalizada de Gesper.</p>
+        <ul class="contact-perks">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Demo de 30 minutos adaptada a tu empresa
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Asesoramiento sobre módulos recomendados
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+            Propuesta comercial sin compromiso
+          </li>
+        </ul>
+
+        <div class="contact-info">
+          <a href="/cdn-cgi/l/email-protection#285e4d465c495b68464749464d5c064b474506495a" class="contact-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+            <span class="__cf_email__" data-cfemail="ea9c8f849e8b99aa84858b848f9ec4898587c48b98">[email&#160;protected]</span>
+          </a>
+          <a href="tel:+5493814000000" class="contact-info-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.8 19.8 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.8 12.8 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.8 12.8 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            +54 9 381 400 0000
+          </a>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="return handleContactSubmit(event)">
+        <div class="form-field">
+          <input type="text" id="cf-name" name="name" required placeholder="Nombre y apellido" />
+        </div>
+        <div class="form-field">
+          <input type="text" id="cf-company" name="company" required placeholder="Empresa" />
+        </div>
+        <div class="form-field">
+          <input type="tel" id="cf-phone" name="phone" required placeholder="Teléfono" />
+        </div>
+        <div class="form-field">
+          <input type="email" id="cf-email" name="email" required placeholder="Correo electrónico" />
+        </div>
+        <div class="form-field">
+          <textarea id="cf-message" name="message" rows="4" placeholder="Mensaje"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">
+          Enviar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </button>
+        <div class="form-success" id="formSuccess" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          ¡Gracias! Te contactamos en menos de 24 horas.
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="assets/logo-gesper.png" alt="Gesper" />
+        <p>Software de recursos humanos de Noanet. Modular, seguro y pensado para crecer con tu empresa.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Producto</h5>
+        <ul>
+          <li><a href="#modulos">Módulos</a></li>
+          <li><a href="#">Autogestión</a></li>
+          <li><a href="#">Integraciones</a></li>
+          <li><a href="#">Seguridad</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <ul>
+          <li><a href="#">Noanet</a></li>
+          <li><a href="#">Clientes</a></li>
+          <li><a href="#">Casos de éxito</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Recursos</h5>
+        <ul>
+          <li><a href="#">Centro de ayuda</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Documentación</a></li>
+          <li><a href="#">Estado del servicio</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Noanet. Todos los derechos reservados.</span>
+      <span>Términos · Privacidad · Cookies</span>
+    </div>
+  </div>
+</footer>
+
+<!-- TWEAKS PANEL -->
+<div class="tweaks-panel" id="tweaksPanel">
+  <h6>Tweaks <button id="tweaksClose">×</button></h6>
+  <div class="tweak-row">
+    <label>Tema</label>
+    <div class="seg" data-seg="theme">
+      <button data-val="dark">Oscuro</button>
+      <button data-val="light">Claro</button>
+    </div>
+  </div>
+  <div class="tweak-row">
+    <label>Tipografía display</label>
+    <div class="seg" data-seg="font">
+      <button data-val="mulish">Mulish</button>
+      <button data-val="inter">Inter</button>
+      <button data-val="dm">DM Sans</button>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "theme": "dark",
+    "font": "inter"
+  }/*EDITMODE-END*/;
+
+  const state = { ...TWEAK_DEFAULTS };
+
+  const fontMap = {
+    mulish: "'Mulish', 'Museo Sans', system-ui, sans-serif",
+    inter: "'Inter', system-ui, sans-serif",
+    dm: "'DM Sans', system-ui, sans-serif"
+  };
+
+  function applyTheme(val) {
+    document.body.setAttribute('data-theme', val);
+  }
+  function applyFont(val) {
+    document.documentElement.style.setProperty('--font-display', fontMap[val]);
+    document.documentElement.style.setProperty('--font-body', fontMap[val]);
+  }
+  function applyAll() {
+    applyTheme(state.theme);
+    applyFont(state.font);
+    // reflect in seg buttons
+    document.querySelectorAll('.seg').forEach(seg => {
+      const key = seg.dataset.seg;
+      seg.querySelectorAll('button').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.val === state[key]);
+      });
+    });
+  }
+
+  // Header theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  themeToggle.addEventListener('click', () => {
+    state.theme = state.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(state.theme);
+    // reflect in panel
+    document.querySelectorAll('[data-seg="theme"] button').forEach(b => b.classList.toggle('active', b.dataset.val === state.theme));
+    persist({ theme: state.theme });
+  });
+
+  // Tweaks panel seg clicks
+  document.querySelectorAll('.seg').forEach(seg => {
+    seg.addEventListener('click', (e) => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const key = seg.dataset.seg;
+      state[key] = btn.dataset.val;
+      applyAll();
+      persist({ [key]: btn.dataset.val });
+    });
+  });
+
+  // Edit mode protocol
+  const panel = document.getElementById('tweaksPanel');
+  const closeBtn = document.getElementById('tweaksClose');
+  closeBtn.addEventListener('click', () => {
+    panel.classList.remove('open');
+    window.parent.postMessage({ type: '__deactivate_edit_mode_self' }, '*');
+  });
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || !e.data.type) return;
+    if (e.data.type === '__activate_edit_mode') panel.classList.add('open');
+    if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+
+  function persist(edits) {
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+  }
+
+  applyAll();
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+
+  // Contact form handler (demo — no backend)
+  window.handleContactSubmit = function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const success = document.getElementById('formSuccess');
+    form.querySelectorAll('input, select, textarea, button').forEach(el => el.disabled = true);
+    success.hidden = false;
+    form.querySelector('.form-submit').style.display = 'none';
+    return false;
+  };
+</script>
+
+</body>
+</html>

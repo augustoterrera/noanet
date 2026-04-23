@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Modules from '../components/Modules.astro';
+import Clients from '../components/Clients.astro';
+import Reasons from '../components/Reasons.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout>
+  <Nav />
+  <main>
+    <Hero />
+    <section id="clientes" class="py-20">
+      <div class="container text-center mb-10">
+        <p class="text-sm font-semibold uppercase tracking-widest text-[var(--accent)] mb-3">Clientes</p>
+        <h2 class="text-3xl font-bold text-[var(--fg)]">Productores que ya digitalizaron su campo</h2>
+      </div>
+      <Clients />
+    </section>
+    <Modules />
+    <Reasons />
+    <Contact />
+  </main>
+  <Footer />
+</Layout>

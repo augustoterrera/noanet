@@ -1,0 +1,107 @@
+---
+const modules = [
+  {
+    tag: '01',
+    label: 'Base',
+    title: 'Control de Personal en Campo',
+    desc: 'Registrá asistencia, jornales y novedades de cada operario directamente desde el campo — sin papel, sin señal. Los datos sincronizan automáticamente con Gesper cuando hay conexión.',
+    features: ['Registro de asistencia offline', 'Jornales y horas trabajadas', 'Novedades por operario', 'Sincronización con Gesper RRHH'],
+  },
+  {
+    tag: '02',
+    label: 'Base',
+    title: 'Gestión de Lotes y Parcelas',
+    desc: 'Organizá tu establecimiento digitalmente. Definí lotes, cultivos activos y rotaciones. Accedé al historial productivo de cada parcela desde cualquier dispositivo.',
+    features: ['Mapa y delimitación de lotes', 'Historial de cultivos', 'Rotaciones y barbechos', 'Rendimientos por parcela'],
+  },
+  {
+    tag: '03',
+    label: '',
+    title: 'Registro de Actividades Agropecuarias',
+    desc: 'Documentá cada labor cultural, aplicación fitosanitaria, siembra y cosecha en tiempo real. Trazabilidad completa del ciclo productivo, auditable y sin errores de transcripción.',
+    features: ['Labores culturales', 'Aplicaciones fitosanitarias', 'Siembra y cosecha', 'Trazabilidad completa'],
+  },
+  {
+    tag: '04',
+    label: '',
+    title: 'Remitos y Movimientos',
+    desc: 'Emití remitos digitales desde el campo al instante. Controlá cada movimiento de producto entre lotes, acopios y destinos — con firma digital y sin necesidad de conexión.',
+    features: ['Emisión de remitos digitales', 'Control de movimientos de producto', 'Historial por lote y destino', 'Firma digital en campo'],
+  },
+  {
+    tag: '05',
+    label: '',
+    title: 'Maquinaria y Equipos',
+    desc: 'Controlá el uso de cada máquina: horas de trabajo, mantenimientos y costos operativos. Optimizá la utilización del parque de maquinaria y anticipate a las fallas.',
+    features: ['Horas de uso por equipo', 'Plan de mantenimiento', 'Costos operativos', 'Alertas de servicio'],
+  },
+  {
+    tag: '06',
+    label: '',
+    title: 'Cosecha y Producción',
+    desc: 'Registrá rendimientos, calidad y destino de la producción. Comparaciones por lote, campaña y cultivo para mejorar la toma de decisiones en cada ciclo.',
+    features: ['Rendimientos por lote', 'Calidad y humedad', 'Destino de producción', 'Comparativa por campaña'],
+  },
+  {
+    tag: '07',
+    label: '',
+    title: 'Packing en Campo',
+    desc: 'Gestioná el empaque directamente en el establecimiento. Controlá bins, envases y calidad del producto en el punto de origen, con trazabilidad completa desde la cosecha hasta el despacho.',
+    features: ['Control de bins y envases', 'Registro de calidad por lote', 'Trazabilidad cosecha–empaque', 'Despacho y destino de producción'],
+  },
+  {
+    tag: '08',
+    label: 'Integración',
+    title: 'Sincronización con Gesper',
+    desc: 'El círculo completo. La información de personal y jornales registrada en campo fluye automáticamente hacia Gesper para la liquidación de haberes y la gestión de RRHH — sin doble carga de datos.',
+    features: ['Datos de asistencia a Gesper', 'Liquidación automática', 'Sin doble carga', 'Información en tiempo real'],
+  },
+];
+---
+
+<section class="section" id="modulos">
+  <div class="container">
+
+    <div class="section-head">
+      <span class="section-eyebrow">Módulos</span>
+      <h2 class="h2">Todo lo que pasa en el campo, <span class="accent">en tu sistema.</span></h2>
+      <p class="section-sub max-w-lg mx-auto">Seis módulos integrados que digitalizan la operación agropecuaria y se sincronizan con Gesper. Sin papeles, sin señal obligatoria, sin errores.</p>
+    </div>
+
+    <div class="divide-y divide-[var(--border)]">
+      {modules.map((m) => (
+        <div class="py-14 nav:py-20 grid nav:grid-cols-2 gap-8 nav:gap-16 items-start">
+
+          <div>
+            <div class="flex items-center gap-2 mb-5">
+              <span class="text-[11px] font-semibold tracking-[0.12em] uppercase text-[var(--fg-dim)]">{m.tag}</span>
+              {m.label && (
+                <span class="text-[11px] font-semibold tracking-[0.06em] uppercase px-2 py-[3px] rounded-full border border-[var(--border)] text-[var(--accent)]">{m.label}</span>
+              )}
+            </div>
+            <h3 class="font-display text-[clamp(28px,4vw,42px)] font-bold tracking-[-0.03em] leading-[1.1] text-[var(--fg)]">
+              {m.title}
+            </h3>
+          </div>
+
+          <div class="flex flex-col gap-8">
+            <p class="text-[17px] leading-[1.65] text-[var(--fg-muted)]">{m.desc}</p>
+
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-[10px]">
+              {m.features.map((f, fi) => (
+                <div class="flex items-baseline gap-2">
+                  <dt class="text-[12px] font-semibold tabular-nums text-[var(--fg-dim)] shrink-0">
+                    {m.tag}.{String(fi + 1).padStart(1, '0')}
+                  </dt>
+                  <dd class="text-[13px] text-[var(--fg-muted)]">{f}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
