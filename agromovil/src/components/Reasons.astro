@@ -1,0 +1,67 @@
+---
+const reasons = [
+  {
+    num: '01',
+    title: 'Funciona offline en el campo',
+    desc: 'Registrá asistencia, jornales y actividades sin conexión a internet. Los datos se sincronizan automáticamente cuando el dispositivo vuelve a tener señal.',
+  },
+  {
+    num: '02',
+    title: 'Integrado nativamente con Gesper',
+    desc: 'La información de campo fluye directo al módulo de liquidación de haberes. Sin doble carga, sin errores de transcripción, sin intermediarios.',
+  },
+  {
+    num: '03',
+    title: 'Trazabilidad completa',
+    desc: 'Cada labor, aplicación y movimiento de personal queda registrado con fecha, usuario y ubicación. Auditoría total desde el campo hasta el escritorio.',
+  },
+  {
+    num: '04',
+    title: 'Multiestablecimiento',
+    desc: 'Gestioná varios campos desde una sola plataforma. Reportes consolidados o por establecimiento, con accesos diferenciados por rol y empresa.',
+  },
+  {
+    num: '05',
+    title: 'Acceso desde cualquier dispositivo',
+    desc: 'Tablet, celular o computadora. La interfaz se adapta al dispositivo del operario en campo y del gestor en oficina, sin instalar software adicional.',
+  },
+  {
+    num: '06',
+    title: 'Información gerencial en tiempo real',
+    desc: 'Dashboards con costos de producción, horas de maquinaria, rendimientos por lote y jornales — actualizados en el momento, no al cierre de mes.',
+  },
+  {
+    num: '07',
+    title: 'Soporte y evolución constante',
+    desc: 'Desarrollado por Noanet, la misma empresa detrás de Gesper. Soporte local en Argentina, actualizaciones periódicas y escucha activa de los clientes.',
+  },
+];
+---
+
+<section class="section border-t border-b border-[var(--border)] bg-[var(--bg-elev)]" id="razones">
+  <div class="container">
+    <div class="grid grid-cols-1 nav:grid-cols-2 gap-20 nav:gap-[80px] items-start">
+
+      <!-- Sticky left column -->
+      <div class="nav:sticky nav:top-[120px]">
+        <span class="section-eyebrow text-left">Por qué Agromovil</span>
+        <h2 class="h2 text-left">Del campo al sistema, <span class="accent">sin fricción.</span></h2>
+        <p class="section-sub text-left">Diseñado para el productor agropecuario argentino: robusto en campo, integrado en oficina.</p>
+      </div>
+
+      <!-- Reasons list -->
+      <div class="flex flex-col gap-1">
+        {reasons.map((r) => (
+          <div class="grid grid-cols-[48px_1fr] gap-5 items-start py-7 border-b border-[var(--border)] last:border-b-0">
+            <span class="font-display text-sm font-bold tracking-[0.02em] text-[var(--accent)]">{r.num}</span>
+            <div>
+              <h4 class="text-[19px] font-bold tracking-[-0.015em] mb-[6px]">{r.title}</h4>
+              <p class="text-[14.5px] leading-[1.55] text-[var(--fg-muted)] m-0">{r.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </div>
+</section>

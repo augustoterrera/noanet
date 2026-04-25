@@ -1,0 +1,50 @@
+---
+---
+<header
+  class="sticky top-0 z-50 border-b border-[var(--border)]"
+  style="backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: color-mix(in srgb, var(--bg) 85%, transparent); contain: layout paint; transform: translateZ(0); will-change: backdrop-filter;"
+>
+  <div class="container flex items-center justify-between h-[72px]">
+
+    <a href="#" class="flex items-center gap-[10px]">
+      <img src="/assets/agromovil-logo.png" alt="Agromovil" class="h-[60px] w-auto" />
+    </a>
+
+    <nav class="hidden nav:flex gap-8 items-center">
+      <a href="#clientes"    class="text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">Clientes</a>
+      <a href="#modulos"     class="text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">Módulos</a>
+      <a href="#razones"    class="text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">Por qué Agromovil</a>
+      <a href="#contacto"    class="text-sm font-medium text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">Contacto</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <button
+        id="themeToggle"
+        aria-label="Cambiar tema"
+        class="w-10 h-10 rounded-[10px] border border-[var(--border)] bg-transparent text-[var(--fg)] cursor-pointer grid place-items-center transition-all duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--card)]"
+      >
+        <!-- Sol: visible en modo oscuro -->
+        <svg class="icon-sun w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <!-- Luna: visible en modo claro -->
+        <svg class="icon-moon w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+      <a href="#contacto" class="btn btn-primary btn-sm">Solicitar demo</a>
+    </div>
+
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('themeToggle')!;
+
+  toggle.addEventListener('click', () => {
+    const html = document.documentElement;
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('agromovil-theme', next);
+  });
+</script>
