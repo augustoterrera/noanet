@@ -1,17 +1,24 @@
 ---
+import argentiLemonLogo from '../../../shared-assets/clients/argenti-lemon.png';
+import diagonalCitrusLogo from '../../../shared-assets/clients/diagonal-citrus-recortada.png';
+import grupoMpLogo from '../../../shared-assets/clients/grupo-mp.svg';
+import trapaniLogo from '../../../shared-assets/clients/trapani.svg';
+
 const clients = [
-  { src: '/assets/clients/trapani.svg',         alt: 'Trapani',         cls: 'h-9 w-auto' },
-  { src: '/assets/clients/diagonal-citrus-recortada.png', alt: 'Diagonal Citrus', cls: 'h-12 w-auto' },
-  { src: '/assets/clients/argenti-lemon.png',   alt: 'Argenti Lemon',   cls: 'h-12 w-auto' },
-  { src: '/assets/clients/grupo-mp.svg',        alt: 'Grupo MP',        cls: 'h-12 w-auto', label: 'GRUPO MP' },
+  { logo: trapaniLogo, alt: 'Trapani', cls: 'h-9 w-auto' },
+  { logo: diagonalCitrusLogo, alt: 'Diagonal Citrus', cls: 'h-12 w-auto' },
+  { logo: argentiLemonLogo, alt: 'Argenti Lemon', cls: 'h-12 w-auto' },
+  { logo: grupoMpLogo, alt: 'Grupo MP', cls: 'h-12 w-auto', label: 'GRUPO MP' },
 ];
+
+const getImageSrc = (image) => typeof image === 'string' ? image : image.src;
 ---
 
 <div class="clients-static flex items-center justify-center flex-wrap gap-12 py-3 px-8">
   {clients.map((c) => (
     <div class="clients-item shrink-0 flex items-center justify-center px-3">
       <img
-        src={c.src}
+        src={getImageSrc(c.logo)}
         alt={c.alt}
         class={`${c.cls} object-contain`}
         loading="lazy"
