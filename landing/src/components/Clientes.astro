@@ -1,0 +1,117 @@
+---
+import agroAlianzaLogo from '../../../shared-assets/clients/agro-alianza.png';
+import argentiLemonLogo from '../../../shared-assets/clients/argenti-lemon.png';
+import citromaxLogo from '../../../shared-assets/clients/CITROMAX.png';
+import diagonalCitrusLogo from '../../../shared-assets/clients/diagonal-citrus-recortada.png';
+import emiLogo from '../../../shared-assets/clients/emi.png';
+import fpmLogo from '../../../shared-assets/clients/fpm.png';
+import gobiernoJujuyLogo from '../../../shared-assets/clients/gobierno-jujuy.png';
+import gobiernoTucumanLogo from '../../../shared-assets/clients/gobierno-tucuman.svg';
+import intaLogo from '../../../shared-assets/clients/inta.png';
+import integralRrhhLogo from '../../../shared-assets/clients/integral-rrhh.png';
+import justinianoFriasLogo from '../../../shared-assets/clients/Azucarera-Justiniano-Frias.png';
+import losBalancesLogo from '../../../shared-assets/clients/los-balances-SA.png';
+import naturgyLogo from '../../../shared-assets/clients/imgi_2_naturgy-brand.png';
+import trapaniLogo from '../../../shared-assets/clients/trapani.svg';
+import unstaLogo from '../../../shared-assets/clients/unsta.jpeg';
+import untLogo from '../../../shared-assets/clients/unt.png';
+import usptLogo from '../../../shared-assets/clients/logo-uspt.svg';
+import ypfLogo from '../../../shared-assets/clients/ypf.png';
+
+type ImageAsset = string | { src: string };
+
+type Client = {
+  logo: ImageAsset;
+  alt: string;
+  imageClass?: string;
+};
+
+const clients: Client[] = [
+  { logo: ypfLogo, alt: 'YPF' },
+  { logo: gobiernoJujuyLogo, alt: 'Gobierno de Jujuy' },
+  { logo: gobiernoTucumanLogo, alt: 'Gobierno de Tucumán' },
+  { logo: intaLogo, alt: 'INTA', imageClass: 'brightness-0' },
+  { logo: naturgyLogo, alt: 'Naturgy' },
+  { logo: untLogo, alt: 'Universidad Nacional de Tucumán', imageClass: 'brightness-0' },
+  { logo: unstaLogo, alt: 'UNSTA' },
+  { logo: emiLogo, alt: 'EMI' },
+  { logo: trapaniLogo, alt: 'Trapani' },
+  { logo: agroAlianzaLogo, alt: 'Agro Alianza' },
+  { logo: losBalancesLogo, alt: 'Los Balcanes S.A.' },
+  { logo: integralRrhhLogo, alt: 'Integral Recursos Humanos' },
+  { logo: justinianoFriasLogo, alt: 'S.A. Azucarera Justiniano Frías' },
+  { logo: citromaxLogo, alt: 'Citromax' },
+  { logo: argentiLemonLogo, alt: 'Argenti Lemon' },
+  { logo: fpmLogo, alt: 'FPM' },
+  { logo: usptLogo, alt: 'USP-T' },
+  { logo: diagonalCitrusLogo, alt: 'Diagonal Citrus' },
+];
+
+const getImageSrc = (image: ImageAsset) => typeof image === 'string' ? image : image.src;
+---
+
+<section id="clientes" class="scroll-mt-20 bg-navy py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="mx-auto max-w-2xl text-center animate-on-scroll">
+      <h2 class="text-3xl font-bold text-white sm:text-4xl">
+        Empresas que confían en nosotros
+      </h2>
+      <p class="mt-4 text-lg font-light text-white/70">
+        Trabajamos con referentes de tecnología, desarrollo de software,
+        agroindustria, energía, gobierno, educación y servicios.
+      </p>
+    </div>
+
+    <!-- Logo wall -->
+    <div class="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      {clients.map((client, index) => (
+        <div 
+          class="client-card animate-on-scroll flex items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 hover:scale-105"
+          style={`animation-delay: ${index * 0.05}s`}
+        >
+          <img
+            src={getImageSrc(client.logo)}
+            alt={client.alt}
+            class={`max-h-12 max-w-[150px] object-contain ${client.imageClass ?? ''}`}
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .client-card {
+    min-height: 80px;
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('#clientes .animate-on-scroll').forEach((el) => {
+    observer.observe(el);
+  });
+</script>

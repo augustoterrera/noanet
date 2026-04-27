@@ -1,0 +1,217 @@
+---
+const services = [
+  { label: '01 - Tecnología', name: 'Conectividad, redes & Data Center' },
+  { label: '02 - Software', name: 'Gesper, Agromovil, Cenit & desarrollos a medida' },
+  { label: '03 - Contact Center', name: 'Inbound, outbound y canales digitales' },
+  { label: '04 - Internet', name: 'Noanet Wifi para hogares' },
+];
+---
+
+<section id="hero" class="relative flex min-h-[560px] overflow-hidden bg-white pt-20 lg:min-h-[760px] lg:items-center">
+
+  <div
+    class="absolute inset-y-0 right-0 hidden w-[48%] bg-navy lg:block [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-x-0 top-0 h-[40%] bg-navy lg:hidden" aria-hidden="true"></div>
+
+  <canvas
+    id="hero-network-canvas"
+    class="absolute inset-x-0 top-0 h-[40%] w-full lg:inset-y-0 lg:left-auto lg:h-full lg:w-[48%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
+    aria-hidden="true"
+  ></canvas>
+
+  <div class="relative z-30 mx-auto grid w-full max-w-7xl gap-8 px-6 pb-14 pt-6 sm:px-8 lg:-translate-y-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.8fr)] lg:items-center lg:gap-12 lg:px-10 lg:pb-24 lg:pt-16">
+    <div class="max-w-xl pt-[30vh] lg:pt-0">
+      <div class="hero-fade flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-gray-500">
+        <span class="h-0.5 w-8 bg-gray-500"></span>
+        Noanet | Soluciones TIC
+      </div>
+
+      <h1 class="hero-fade mt-6 text-[clamp(2rem,5vw,3.7rem)] font-black leading-[1.05] text-navy [animation-delay:150ms]">
+        Soluciones tecnológicas innovadoras y a medida para <span class="text-accent">empresas</span>
+      </h1>
+
+      <div class="hero-divider mt-6 h-[3px] w-12 bg-navy"></div>
+
+      <p class="hero-fade mt-6 max-w-[34rem] text-base font-light leading-8 text-text-muted [animation-delay:450ms] sm:text-lg">
+        Integramos productos y tecnologías TIC según las necesidades, infraestructura y requerimientos de cada cliente para cumplir sus objetivos de una manera creativa.
+      </p>
+
+      <div class="hero-fade mt-9 flex flex-col gap-3 sm:flex-row [animation-delay:600ms]">
+        <a
+          href="#soluciones"
+          class="inline-flex items-center justify-center bg-accent px-7 py-3 text-sm font-bold uppercase tracking-[0.06em] text-white transition hover:-translate-y-0.5 hover:bg-accent-hover"
+        >
+          Nuestros servicios
+        </a>
+        <a
+          href="#contacto"
+          class="inline-flex items-center justify-center border-2 border-navy px-7 py-3 text-sm font-bold uppercase tracking-[0.06em] text-navy transition hover:-translate-y-0.5 hover:bg-navy hover:text-white"
+        >
+          Contactar
+        </a>
+      </div>
+    </div>
+
+    <div class="relative z-30 flex flex-col gap-4 lg:items-end lg:pl-12">
+      {services.map((service, index) => (
+        <article
+          class="service-card w-full border border-white/15 border-l-[3px] border-l-accent bg-white/[0.07] px-5 py-4 backdrop-blur-sm lg:max-w-[280px]"
+          style={`animation-delay: ${700 + index * 150}ms`}
+        >
+          <span class="block text-[0.63rem] font-bold uppercase tracking-[0.15em] text-white/45">{service.label}</span>
+          <span class="mt-1 block text-sm font-bold text-white sm:text-base">{service.name}</span>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-fade {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: heroFadeIn 0.6s ease forwards;
+  }
+
+  .hero-divider {
+    opacity: 0;
+    width: 0;
+    animation: heroDividerIn 0.5s ease 300ms forwards;
+  }
+
+  .service-card {
+    opacity: 0;
+    transform: translateX(20px);
+    animation: heroServiceIn 0.5s ease forwards;
+  }
+
+  @keyframes heroFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes heroDividerIn {
+    to {
+      opacity: 1;
+      width: 3rem;
+    }
+  }
+
+  @keyframes heroServiceIn {
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-fade,
+    .hero-divider,
+    .service-card {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero-divider {
+      width: 3rem;
+    }
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('hero-network-canvas') as HTMLCanvasElement | null;
+  const hero = document.getElementById('hero');
+  const context = canvas?.getContext('2d');
+
+  if (canvas && hero && context) {
+    const networkCanvas = canvas;
+    const ctx = context;
+    const count = 36;
+    let width = 0;
+    let height = 0;
+    let nodes: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      r: number;
+      pulse: number;
+    }> = [];
+
+    function createNodes() {
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.28,
+        vy: (Math.random() - 0.5) * 0.28,
+        r: Math.random() * 1.8 + 1,
+        pulse: Math.random() * Math.PI * 2,
+      }));
+    }
+
+    function resizeCanvas() {
+      const rect = networkCanvas.getBoundingClientRect();
+      const ratio = window.devicePixelRatio || 1;
+
+      width = rect.width;
+      height = rect.height;
+      networkCanvas.width = Math.max(1, Math.floor(width * ratio));
+      networkCanvas.height = Math.max(1, Math.floor(height * ratio));
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      createNodes();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+
+      nodes.forEach((node) => {
+        node.x += node.vx;
+        node.y += node.vy;
+        node.pulse += 0.02;
+
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+      });
+
+      for (let i = 0; i < nodes.length; i += 1) {
+        for (let j = i + 1; j < nodes.length; j += 1) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 120) {
+            const alpha = (1 - distance / 120) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+
+      nodes.forEach((node) => {
+        const pulse = Math.sin(node.pulse) * 0.35 + 0.65;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, node.r * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${0.25 + pulse * 0.25})`;
+        ctx.fill();
+      });
+
+      window.requestAnimationFrame(draw);
+    }
+
+    resizeCanvas();
+    draw();
+    window.addEventListener('resize', resizeCanvas);
+  }
+</script>

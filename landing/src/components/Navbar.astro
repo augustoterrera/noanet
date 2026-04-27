@@ -1,0 +1,172 @@
+---
+import noanetLogo from '../image/noanet-logo-cropped.png';
+
+const navLinks = [
+  { href: '#nosotros', label: 'Nosotros' },
+  { href: '#soluciones', label: 'Soluciones' },
+  { href: '#sistemas', label: 'Sistemas' },
+  { href: '#obras', label: 'Obras' },
+  { href: '#contact-center', label: 'Contact Center' },
+  { href: '#clientes', label: 'Clientes' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+  <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-20 items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <img
+          src={noanetLogo.src}
+          alt="Noanet"
+          class="h-9 w-auto"
+          width={noanetLogo.width}
+          height={noanetLogo.height}
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden items-center gap-5 lg:gap-7 md:flex">
+        {navLinks.map(link => (
+          <a 
+            href={link.href} 
+            class="nav-link text-sm font-medium transition-colors duration-300 hover:text-accent"
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <!-- CTA Button -->
+      <div class="hidden md:block">
+        <a 
+          href="#contacto" 
+          class="inline-flex items-center justify-center rounded-full bg-accent px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-accent-hover"
+        >
+          Contactanos
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button 
+        id="mobile-menu-btn"
+        class="flex h-10 w-10 items-center justify-center rounded-lg md:hidden"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+      >
+        <svg class="hamburger-icon h-6 w-6 transition-colors duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
+    <div class="mobile-overlay absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
+    <div class="mobile-drawer absolute right-0 top-0 h-full w-80 translate-x-full transform bg-white shadow-xl transition-transform duration-300">
+      <div class="flex h-20 items-center justify-between px-6">
+        <img
+          src={noanetLogo.src}
+          alt="Noanet"
+          class="h-10 w-auto"
+          width={noanetLogo.width}
+          height={noanetLogo.height}
+        />
+        <button id="close-menu-btn" class="flex h-10 w-10 items-center justify-center" aria-label="Cerrar menú">
+          <svg class="h-6 w-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-2 px-6">
+        {navLinks.map(link => (
+          <a 
+            href={link.href} 
+            class="mobile-nav-link rounded-lg px-4 py-3 text-base font-medium text-navy transition-colors hover:bg-background-alt"
+          >
+            {link.label}
+          </a>
+        ))}
+        <a 
+          href="#contacto" 
+          class="mobile-nav-link mt-4 inline-flex items-center justify-center rounded-full bg-accent px-6 py-3 text-base font-bold text-white transition-colors hover:bg-accent-hover"
+        >
+          Contactanos
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Default state - readable over the institutional hero */
+  #navbar {
+    background-color: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+  }
+  
+  #navbar .nav-link,
+  #navbar .hamburger-icon {
+    color: #0e2351;
+  }
+
+  /* Scrolled state */
+  #navbar.scrolled {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  #navbar.scrolled .nav-link,
+  #navbar.scrolled .hamburger-icon {
+    color: #0e2351;
+  }
+</style>
+
+<script>
+  // Navbar scroll behavior
+  const navbar = document.getElementById('navbar');
+  
+  function updateNavbar() {
+    if (window.scrollY > 50) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+  }
+  
+  window.addEventListener('scroll', updateNavbar);
+  updateNavbar();
+
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const closeMenuBtn = document.getElementById('close-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const overlay = mobileMenu?.querySelector('.mobile-overlay');
+  const drawer = mobileMenu?.querySelector('.mobile-drawer');
+  const mobileNavLinks = mobileMenu?.querySelectorAll('.mobile-nav-link');
+
+  function openMenu() {
+    mobileMenu?.classList.remove('hidden');
+    setTimeout(() => {
+      overlay?.classList.add('opacity-100');
+      drawer?.classList.remove('translate-x-full');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    overlay?.classList.remove('opacity-100');
+    drawer?.classList.add('translate-x-full');
+    setTimeout(() => {
+      mobileMenu?.classList.add('hidden');
+    }, 300);
+    document.body.style.overflow = '';
+  }
+
+  mobileMenuBtn?.addEventListener('click', openMenu);
+  closeMenuBtn?.addEventListener('click', closeMenu);
+  overlay?.addEventListener('click', closeMenu);
+  mobileNavLinks?.forEach(link => link.addEventListener('click', closeMenu));
+</script>

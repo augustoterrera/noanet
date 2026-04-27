@@ -1,0 +1,93 @@
+---
+const metrics = [
+  { number: '123', label: 'Personas en la organización' },
+  { number: '+20 años', label: 'De experiencia en el mercado' },
+  { number: '2.500 km', label: 'De red propia' },
+  { number: '96 sitios', label: 'En infraestructura de conectividad' },
+  { number: '190', label: 'Servicios activos' },
+];
+
+const differentiators = [
+  'Trayectoria y solidez',
+  'Soluciones personalizadas',
+  'Innovación continua',
+];
+
+const areas = [
+  'Tecnología',
+  'Desarrollo de Software',
+  'Contact Center',
+  'Comercial',
+  'Administración y Finanzas',
+  'Seguridad',
+];
+---
+
+<section id="nosotros" class="scroll-mt-20 bg-background py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <!-- Text content -->
+      <div class="animate-on-scroll">
+        <h2 class="text-3xl font-bold text-navy sm:text-4xl">
+          ¿Qué es Noanet?
+        </h2>
+        <p class="mt-6 text-lg font-light leading-relaxed text-text-muted">
+          Somos un equipo sólido que aporta soluciones TIC a todo tipo de empresas. 
+          Según las necesidades, la infraestructura y los requerimientos específicos 
+          de nuestros clientes, integramos diferentes productos y tecnologías para 
+          cumplir sus objetivos de una manera creativa.
+        </p>
+        <p class="mt-4 text-base font-light leading-relaxed text-text-muted">
+          Nuestra organización reúne equipos de tecnología, desarrollo de software,
+          contact center, administración, comercial y seguridad para acompañar a cada
+          cliente desde la implementación hasta el soporte continuo.
+        </p>
+        
+        <!-- Differentiators -->
+        <div class="mt-8 flex flex-wrap gap-3">
+          {differentiators.map(item => (
+            <span class="inline-flex rounded-full bg-navy px-4 py-2 text-sm font-medium text-white">
+              {item}
+            </span>
+          ))}
+        </div>
+        <div class="mt-8 flex flex-wrap gap-2">
+          {areas.map(area => (
+            <span class="inline-flex rounded-full border border-navy/15 px-4 py-2 text-sm font-medium text-navy">
+              {area}
+            </span>
+          ))}
+        </div>
+      </div>
+
+  </div>
+</section>
+
+<style>
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+    observer.observe(el);
+  });
+</script>

@@ -1,0 +1,72 @@
+---
+const projects = [
+  'Edificio Fuero Penal de Tucumán',
+  'Nuevo edificio Consejo Asesor de la Magistratura',
+  'Anillo de fibra óptica para Ministerios de Economía',
+  'Red de datos para Nueva Planta Generadora de YPF',
+  'Jujuy Seguro e Interconectado: red de fibra óptica y CCTV para Gobierno de Jujuy',
+  'Nueva planta citrícola San Miguel',
+  'Ampliación Paramérica S.A.',
+];
+---
+
+<section id="obras" class="scroll-mt-20 bg-background-alt py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+      <div class="animate-on-scroll">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-accent">Obras de referencia</span>
+        <h2 class="mt-3 text-3xl font-bold text-navy sm:text-4xl">
+          Experiencia aplicada en proyectos críticos
+        </h2>
+        <p class="mt-4 text-lg font-light leading-relaxed text-text-muted">
+          Diseñamos, instalamos y mantenemos redes de voz, datos, fibra óptica,
+          CCTV e infraestructura de comunicación para empresas, organismos e industrias.
+        </p>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {projects.map((project, index) => (
+          <article
+            class="animate-on-scroll border-l-4 border-accent bg-white p-5 shadow-sm"
+            style={`animation-delay: ${index * 0.07}s`}
+          >
+            <div class="text-xs font-bold uppercase tracking-[0.12em] text-text-light">
+              Proyecto {String(index + 1).padStart(2, '0')}
+            </div>
+            <h3 class="mt-2 text-base font-bold leading-snug text-navy">{project}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  document.querySelectorAll('#obras .animate-on-scroll').forEach((el) => {
+    observer.observe(el);
+  });
+</script>
