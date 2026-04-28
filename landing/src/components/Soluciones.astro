@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import agromovilLogo from '../image/agromovil.png';
 import cenitLogo from '../image/cenit.png';
 import conectLogo from '../image/conect.png';
@@ -38,9 +39,9 @@ const solutions = [
     link: '#contacto'
   },
   {
-    title: 'Comunicaciones y Networking',
-    description: 'Cableado UTP, fibra óptica, vínculos inalámbricos, telefonía LAN/WAN, VPN punto a punto, CCTV y soporte técnico 24 horas, todos los días.',
-    icon: 'network',
+    title: 'Ciberseguridad',
+    description: 'En NOANET brindamos servicios integrales de ciberseguridad orientados a la protección de activos digitales, la continuidad operativa y la gestión del riesgo tecnológico. Operamos con enfoque preventivo y operativo, integrando monitoreo, gestión de vulnerabilidades, respuesta a incidentes e identidad y accesos, en entornos on-premise y cloud. Nuestro modelo se basa en estándares internacionales (ISO/IEC 27001-27002 y NIST), garantizando gobernanza, trazabilidad y alineación con los objetivos del negocio.',
+    icon: 'shield',
     isProduct: false,
     link: '#contacto'
   },
@@ -87,12 +88,10 @@ const solutions = [
           <!-- Logo / Icon and title -->
           {solution.logo ? (
             <div class="mb-5 flex min-h-14 items-center justify-start pr-28">
-              <img
-                src={solution.logo.src}
+              <Image
+                src={solution.logo}
                 alt={`Logo ${solution.title}`}
                 class="max-h-10 max-w-[180px] object-contain"
-                width={solution.logo.width}
-                height={solution.logo.height}
               />
             </div>
           ) : (
@@ -116,6 +115,11 @@ const solutions = [
                 {solution.icon === 'network' && (
                   <svg class="h-6 w-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                  </svg>
+                )}
+                {solution.icon === 'shield' && (
+                  <svg class="h-6 w-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75l2 2 4-4.5m5.25-3.75c0 7.219-4.876 13.21-8.25 14.25-3.374-1.04-8.25-7.031-8.25-14.25C6.125 5.99 8.78 4.875 12 3c3.22 1.875 5.875 2.99 8.25 3.5z" />
                   </svg>
                 )}
                 {solution.icon === 'server' && (

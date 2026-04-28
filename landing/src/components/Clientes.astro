@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import agroAlianzaLogo from '../../../shared-assets/clients/agro-alianza.png';
 import argentiLemonLogo from '../../../shared-assets/clients/argenti-lemon.png';
 import citromaxLogo from '../../../shared-assets/clients/CITROMAX.png';
@@ -18,15 +19,7 @@ import untLogo from '../../../shared-assets/clients/unt.png';
 import usptLogo from '../../../shared-assets/clients/logo-uspt.svg';
 import ypfLogo from '../../../shared-assets/clients/ypf.png';
 
-type ImageAsset = string | { src: string };
-
-type Client = {
-  logo: ImageAsset;
-  alt: string;
-  imageClass?: string;
-};
-
-const clients: Client[] = [
+const clients = [
   { logo: ypfLogo, alt: 'YPF' },
   { logo: gobiernoJujuyLogo, alt: 'Gobierno de Jujuy' },
   { logo: gobiernoTucumanLogo, alt: 'Gobierno de Tucumán' },
@@ -46,8 +39,6 @@ const clients: Client[] = [
   { logo: usptLogo, alt: 'USP-T' },
   { logo: diagonalCitrusLogo, alt: 'Diagonal Citrus' },
 ];
-
-const getImageSrc = (image: ImageAsset) => typeof image === 'string' ? image : image.src;
 ---
 
 <section id="clientes" class="scroll-mt-20 bg-navy py-20 lg:py-28">
@@ -70,8 +61,8 @@ const getImageSrc = (image: ImageAsset) => typeof image === 'string' ? image : i
           class="client-card animate-on-scroll flex items-center justify-center rounded-lg bg-white p-4 transition-all duration-300 hover:scale-105"
           style={`animation-delay: ${index * 0.05}s`}
         >
-          <img
-            src={getImageSrc(client.logo)}
+          <Image
+            src={client.logo}
             alt={client.alt}
             class={`max-h-12 max-w-[150px] object-contain ${client.imageClass ?? ''}`}
             loading="lazy"

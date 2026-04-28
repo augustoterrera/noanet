@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import noanetLogo from '../image/noanet-logo-cropped.png';
 
 const navLinks = [
@@ -17,12 +18,10 @@ const navLinks = [
     <div class="flex h-20 items-center justify-between">
       <!-- Logo -->
       <a href="/" class="flex items-center gap-3">
-        <img
-          src={noanetLogo.src}
+        <Image
+          src={noanetLogo}
           alt="Noanet"
           class="h-9 w-auto"
-          width={noanetLogo.width}
-          height={noanetLogo.height}
         />
       </a>
 
@@ -67,12 +66,10 @@ const navLinks = [
     <div class="mobile-overlay absolute inset-0 bg-black/50 opacity-0 transition-opacity duration-300"></div>
     <div class="mobile-drawer absolute right-0 top-0 h-full w-80 translate-x-full transform bg-white shadow-xl transition-transform duration-300">
       <div class="flex h-20 items-center justify-between px-6">
-        <img
-          src={noanetLogo.src}
+        <Image
+          src={noanetLogo}
           alt="Noanet"
           class="h-10 w-auto"
-          width={noanetLogo.width}
-          height={noanetLogo.height}
         />
         <button id="close-menu-btn" class="flex h-10 w-10 items-center justify-center" aria-label="Cerrar menú">
           <svg class="h-6 w-6 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor">
