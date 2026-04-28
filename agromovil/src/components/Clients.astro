@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import argentiLemonLogo from '../../../shared-assets/clients/argenti-lemon.png';
 import diagonalCitrusLogo from '../../../shared-assets/clients/diagonal-citrus-recortada.png';
 import grupoMpLogo from '../../../shared-assets/clients/grupo-mp.svg';
@@ -10,15 +11,13 @@ const clients = [
   { logo: argentiLemonLogo, alt: 'Argenti Lemon', cls: 'h-12 w-auto' },
   { logo: grupoMpLogo, alt: 'Grupo MP', cls: 'h-12 w-auto', label: 'GRUPO MP' },
 ];
-
-const getImageSrc = (image) => typeof image === 'string' ? image : image.src;
 ---
 
 <div class="clients-static flex items-center justify-center flex-wrap gap-12 py-3 px-8">
   {clients.map((c) => (
     <div class="clients-item shrink-0 flex items-center justify-center px-3">
-      <img
-        src={getImageSrc(c.logo)}
+      <Image
+        src={c.logo}
         alt={c.alt}
         class={`${c.cls} object-contain`}
         loading="lazy"
