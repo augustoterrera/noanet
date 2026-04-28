@@ -1,32 +1,43 @@
 ---
 import { Image } from 'astro:assets';
-import agromovilLogo from '../image/agromovil.png';
-import cenitLogo from '../image/cenit.png';
-import conectLogo from '../image/conect.png';
-import gesperLogo from '../image/gesper.png';
+import noanetLogoSvg from '../../../shared-assets/noanet-logo.svg?raw';
+
+const recolorableNoanetLogo = noanetLogoSvg
+  .replace(/<path[^>]*fill="rgb\(255,255,255\)"[^>]*\/>/, '')
+  .replace(/fill="rgb\((?:22,59,108|30,64,120)\)"/g, 'fill="var(--solution-logo-circle)"')
+  .replace(/fill="rgb\(254,49,59\)"/g, 'fill="var(--solution-logo-triangle)"')
+  .replace('preserveAspectRatio="none"', 'preserveAspectRatio="xMidYMid meet"');
 
 const solutions = [
   {
     title: 'Gesper',
     description: 'Sistema web modular para la gestión total de Recursos Humanos: legajo digital, asistencia, liquidación de sueldos, medicina laboral, capacitación y autogestión.',
     icon: 'users',
-    logo: gesperLogo,
+    sharedLogoSvg: recolorableNoanetLogo,
+    logoClass: 'h-8 w-8',
+    logoStyle: '--solution-logo-circle: #691e5a; --solution-logo-triangle: #e62c35;',
     isProduct: true,
-    link: 'https://gesper.vercel.app'
+    link: 'https://gesper.vercel.app',
+    external: true
   },
   {
     title: 'Agromovil',
     description: 'Sistema para empresas agrícolas que gestiona asistencia, lotes, tareas, remitos, producción y packing en campo, con operación offline y sincronización posterior.',
     icon: 'leaf',
-    logo: agromovilLogo,
+    sharedLogoSvg: recolorableNoanetLogo,
+    logoClass: 'h-8 w-8',
+    logoStyle: '--solution-logo-circle: #2e7552; --solution-logo-triangle: #e62c35;',
     isProduct: true,
-    link: 'https://agromovil.vercel.app'
+    link: 'https://agromovil.vercel.app',
+    external: true
   },
   {
     title: 'Cenit',
     description: 'Seguimiento vehicular por GPS para transporte de pasajeros, carga o cuadrillas. Mapa en tiempo real, reportes, eventos configurables e historial de flota.',
     icon: 'map',
-    logo: cenitLogo,
+    sharedLogoSvg: recolorableNoanetLogo,
+    logoClass: 'h-8 w-8',
+    logoStyle: '--solution-logo-circle: #000000; --solution-logo-triangle: #e62c35;',
     isProduct: true,
     link: 'https://www.noanet.com.ar/cenit/'
   },
@@ -34,7 +45,9 @@ const solutions = [
     title: 'Conect',
     description: 'Conectividad segura entre puntos de trabajo y sucursales, con infraestructura propia incluso en zonas remotas. Diseño, instalación, administración y mantenimiento de redes.',
     icon: 'globe',
-    logo: conectLogo,
+    sharedLogoSvg: recolorableNoanetLogo,
+    logoClass: 'h-8 w-8',
+    logoStyle: '--solution-logo-circle: #991a44; --solution-logo-triangle: #e62c35;',
     isProduct: false,
     link: '#contacto'
   },
@@ -86,7 +99,23 @@ const solutions = [
           <div class="absolute left-0 right-0 top-0 h-1 origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100"></div>
 
           <!-- Logo / Icon and title -->
-          {solution.logo ? (
+          {solution.sharedLogoSvg ? (
+            <div class="mb-4 flex items-center gap-3 pr-28">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-navy/5">
+                <div
+                  class:list={[
+                    'shared-solution-logo shrink-0',
+                    solution.logoClass ?? 'h-8 w-8',
+                  ]}
+                  style={solution.logoStyle}
+                  aria-label={`Logo ${solution.title}`}
+                  role="img"
+                  set:html={solution.sharedLogoSvg}
+                />
+              </div>
+              <h3 class="text-xl font-bold text-navy">{solution.title}</h3>
+            </div>
+          ) : solution.logo ? (
             <div class="mb-5 flex min-h-14 items-center justify-start pr-28">
               <Image
                 src={solution.logo}
@@ -156,6 +185,8 @@ const solutions = [
           <!-- Link -->
           <a 
             href={solution.link} 
+            target={solution.external ? '_blank' : undefined}
+            rel={solution.external ? 'noopener noreferrer' : undefined}
             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-accent-hover"
           >
             Conocer más
@@ -179,6 +210,11 @@ const solutions = [
   .animate-on-scroll.visible {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .shared-solution-logo :global(svg) {
+    height: 100%;
+    width: 100%;
   }
 </style>
 
