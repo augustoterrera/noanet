@@ -2,4 +2,4 @@ dist/
 node_modules/
 .astro
 .codex
-.README.md
+README.md
