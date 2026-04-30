@@ -146,8 +146,10 @@ const modules: Module[] = [
                 <Image
                   src={m.image.src}
                   alt={m.image.alt}
+                  width={420}
+                  widths={[320, 420, 640, 840]}
                   loading="lazy"
-                  sizes="(min-width: 900px) 28vw, 100vw"
+                  sizes="(min-width: 1240px) 360px, (min-width: 900px) 28vw, calc(100vw - 56px)"
                   class="h-full w-full object-contain"
                 />
                 <span class="module-shot-zoom" aria-hidden="true">
@@ -185,6 +187,8 @@ const modules: Module[] = [
                     <Image
                       src={m.image.src}
                       alt={m.image.alt}
+                      width={1180}
+                      widths={[640, 960, 1180, 1408]}
                       loading="lazy"
                       sizes="min(92vw, 1180px)"
                       class="h-full w-full object-contain"

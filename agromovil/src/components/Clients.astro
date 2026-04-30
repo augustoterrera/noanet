@@ -7,11 +7,11 @@ import grupoMpLogo from '../../../shared-assets/clients/grupo-mp.svg';
 import trapaniLogo from '../../../shared-assets/clients/trapani.svg';
 
 const clients = [
-  { logo: trapaniLogo, alt: 'Trapani', cls: 'h-9 w-auto' },
-  { logo: diagonalCitrusLogo, alt: 'Diagonal Citrus', cls: 'h-12 w-auto' },
-  { logo: argentiLemonLogo, alt: 'Argenti Lemon', cls: 'h-12 w-auto' },
-  { logo: grupoMpLogo, alt: 'Grupo MP', cls: 'h-12 w-auto', label: 'GRUPO MP' },
-  { logo: sideraLogo, alt: 'Sidera S.R.L', cls: 'h-12 w-auto'},
+  { logo: trapaniLogo, alt: 'Trapani', cls: 'h-9 w-auto', width: 160 },
+  { logo: diagonalCitrusLogo, alt: 'Diagonal Citrus', cls: 'h-12 w-auto', width: 180 },
+  { logo: argentiLemonLogo, alt: 'Argenti Lemon', cls: 'h-12 w-auto', width: 240 },
+  { logo: grupoMpLogo, alt: 'Grupo MP', cls: 'h-12 w-auto', width: 64, label: 'GRUPO MP' },
+  { logo: sideraLogo, alt: 'Sidera S.R.L', cls: 'h-12 w-auto', width: 64 },
 ];
 ---
 
@@ -21,6 +21,8 @@ const clients = [
       <Image
         src={c.logo}
         alt={c.alt}
+        width={c.width}
+        densities={[1, 2]}
         class={`${c.cls} object-contain`}
         loading="lazy"
       />

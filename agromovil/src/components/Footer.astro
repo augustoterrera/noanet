@@ -13,7 +13,14 @@ const resources = ['Centro de ayuda', 'Documentación', 'Estado del servicio', '
     <div class="grid grid-cols-2 nav:grid-cols-[2fr_1fr_1fr_1fr] gap-12 mb-14">
       <!-- Brand -->
       <div class="col-span-2 nav:col-span-1">
-        <Image src={agromovilLogo} alt="Agromovil" class="w-[260px] max-w-full h-auto mb-5" />
+        <Image
+          src={agromovilLogo}
+          alt="Agromovil"
+          width={320}
+          densities={[1, 2]}
+          loading="lazy"
+          class="w-[260px] max-w-full h-auto mb-5"
+        />
         <p class="text-sm text-[var(--fg-muted)] max-w-[280px] leading-[1.55]">
           Gestión digital de operaciones en campo. Del celular al portal web, sin papeles.
         </p>

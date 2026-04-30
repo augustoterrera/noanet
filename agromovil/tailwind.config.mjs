@@ -4,9 +4,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Mulish', 'system-ui', '-apple-system', 'sans-serif'],
-        body:    ['Mulish', 'system-ui', '-apple-system', 'sans-serif'],
-        serif:   ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        display: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+        body:    ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+        serif:   ['Georgia', 'serif'],
       },
       colors: {
         green: {
