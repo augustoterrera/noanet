@@ -1,7 +1,7 @@
 ---
 const marqueeItems = [
   { icon: 'M20 6L9 17l-5-5', label: 'Funciona offline en campo' },
-  { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', label: 'Integrado con Gesper RRHH' },
+  { icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', label: 'Integrable con sistemas de RRHH' },
   { icon: 'M3 3v18h18 M7 15l4-4 4 4 5-5', label: 'Información en tiempo real' },
   { icon: 'M9 9h6v6H9z', label: 'Multiestablecimiento', rect: true },
   { icon: 'M12 6v6l4 2', label: 'Trazabilidad completa', circle: true },
@@ -49,11 +49,11 @@ const marqueeItems = [
         <ul class="flex flex-col gap-[14px] mb-10 p-0 list-none">
           {[
             'Demo personalizada a tu tipo de producción',
-            'Asesoramiento sobre integración con Gesper',
+            'Asesoramiento sobre integraciones',
             'Propuesta comercial sin compromiso',
           ].map((perk) => (
             <li class="flex items-center gap-3 text-[15px] text-[var(--fg)]">
-              <svg class="w-[18px] h-[18px] p-1 box-content rounded-full text-[var(--accent)] flex-shrink-0" style="background: color-mix(in srgb, var(--g-lime, #a8f53d) 15%, transparent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <svg class="w-[18px] h-[18px] p-1 box-content rounded-full text-[var(--accent)] flex-shrink-0" style="background: color-mix(in srgb, var(--accent) 15%, transparent);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
                 <path d="M20 6L9 17l-5-5"/>
               </svg>
               {perk}
@@ -99,7 +99,7 @@ const marqueeItems = [
           Enviar
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
-        <div id="formSuccess" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, #a8f53d 12%, transparent); border: 1px solid color-mix(in srgb, #a8f53d 30%, transparent); color: #a8f53d;">
+        <div id="formSuccess" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent); color: var(--accent);">
           <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
           ¡Gracias! Te contactamos en menos de 24 horas.
         </div>
@@ -113,7 +113,7 @@ const marqueeItems = [
   .contact-wrap {
     background:
       radial-gradient(circle at 0% 0%, color-mix(in srgb, #356b36 25%, transparent), transparent 50%),
-      radial-gradient(circle at 100% 100%, color-mix(in srgb, #a8f53d 8%, transparent), transparent 55%),
+      radial-gradient(circle at 100% 100%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 55%),
       var(--bg-elev);
   }
   .contact-grid-bg {
@@ -148,7 +148,7 @@ const marqueeItems = [
   .form-field input:focus,
   .form-field textarea:focus {
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, #a8f53d 15%, transparent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
   }
 </style>
 

@@ -1,53 +1,81 @@
 ---
-const modules = [
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import module1 from '@/images/modulo1.png'
+import module2 from '@/images/modulo2.webp'
+
+
+type ModuleImage = {
+  src: ImageMetadata;
+  alt: string;
+};
+
+type Module = {
+  tag: string;
+  label: string;
+  title: string;
+  desc: string;
+  features: string[];
+  image?: ModuleImage | null;
+};
+
+const modules: Module[] = [
   {
     tag: '01',
     label: 'Base',
     title: 'Control de Personal en Campo',
-    desc: 'Registrá asistencia, jornales y novedades de cada operario directamente desde el campo — sin papel, sin señal. Los datos sincronizan automáticamente con Gesper cuando hay conexión.',
-    features: ['Registro de asistencia offline', 'Jornales y horas trabajadas', 'Novedades por operario', 'Sincronización con Gesper RRHH'],
+    desc: 'Registrá ingresos, asistencia, jornales y novedades desde el celular, usando distintos métodos de reconocimiento como QR, NFC o biometría. Puede trabajarse offline y enviar los datos al portal web de Agromovil bajo demanda cuando haya conectividad.',
+    features: ['Vista gráfica del personal por día', 'Reconocimiento por QR, NFC o biometría', 'Registro desde celular', 'Trabajo offline y envío bajo demanda'],
+    image: {
+      src: module1,
+      alt: 'Vista gráfica del personal trabajando por día en el portal web de Agromovil',
+    },
   },
   {
     tag: '02',
     label: 'Base',
     title: 'Gestión de Lotes y Parcelas',
-    desc: 'Organizá tu establecimiento digitalmente. Definí lotes, cultivos activos y rotaciones. Accedé al historial productivo de cada parcela desde cualquier dispositivo.',
-    features: ['Mapa y delimitación de lotes', 'Historial de cultivos', 'Rotaciones y barbechos', 'Rendimientos por parcela'],
+    desc: 'Organizá tu establecimiento digitalmente. Definí lotes, cultivos activos y rotaciones.',
+    features: ['Mapa y delimitación de lotes', 'Rendimientos por parcela'],
+    image:{
+      src: module2,
+      alt: 'Mapa del portal web con lotes y parcelas delimitadas por colores',
+    }
   },
   {
     tag: '03',
     label: '',
-    title: 'Registro de Actividades Agropecuarias',
-    desc: 'Documentá cada labor cultural, Cosecha en tiempo real. Trazabilidad completa del ciclo productivo, auditable y sin errores de transcripción.',
+    title: 'Registro de Actividades Agrícolas',
+    desc: 'Documentá labores culturales y cosecha desde el celular o desde la PC, adaptándose a cada proceso. La información queda disponible en Agromovil para consultar trazabilidad, campañas y avances sin depender de planillas ni recargas manuales.',
     features: ['Labores culturales', 'Cosecha', 'Trazabilidad completa'],
   },
   {
     tag: '04',
     label: '',
     title: 'Remitos y Movimientos',
-    desc: 'Emití remitos digitales desde el campo al instante. Controlá cada movimiento de producto entre lotes, acopios y destinos — con firma digital y sin necesidad de conexión.',
-    features: ['Emisión de remitos digitales', 'Control de movimientos de producto', 'Historial por lote y destino', 'Firma digital en campo'],
+    desc: 'Registrá desde el celular remitos de campo y remitos con número oficial en forma digital, evitando papeles y minimizando errores. La recepción y gestión de stock se realiza en la web con los datos enviados desde el celular.',
+    features: ['Emisión de remitos digitales (de campo y oficial)', 'Control de movimientos de producto', 'Recepción de mercadería', 'Gestión de stock (fresco, IQF)'],
   },
   {
     tag: '05',
     label: '',
     title: 'Cosecha y Producción',
-    desc: 'Registrá rendimientos, calidad y destino de la producción. Comparaciones por lote, campaña y cultivo para mejorar la toma de decisiones en cada ciclo.',
-    features: ['Rendimientos por lote', 'Calidad y humedad', 'Destino de producción', 'Comparativa por campaña'],
+    desc: 'Registrá rendimientos, calidad y destino de la producción. La información permite crear reportes personalizados según la necesidad de cada cliente e integrarse con Power BI para mejorar el análisis y la toma de decisiones.',
+    features: ['Rendimientos por lote', 'Calidad', 'Destino de producción', 'Comparativa por campaña'],
   },
   {
     tag: '06',
     label: '',
     title: 'Packing en Campo',
-    desc: 'Gestioná el empaque directamente en el establecimiento. Controlá bins, envases y calidad del producto en el punto de origen, con trazabilidad completa desde la cosecha hasta el despacho.',
-    features: ['Control de bins y envases', 'Registro de calidad por lote', 'Trazabilidad cosecha–empaque', 'Despacho y destino de producción'],
+    desc: 'Gestioná el empaque directamente en el establecimiento. Controlá bins, envases, calidad por proceso y despachos, con trazabilidad completa desde la cosecha hasta la salida del producto.',
+    features: ['Control de bins y envases', 'Registro de calidad por proceso', 'Trazabilidad cosecha-empaque', 'Despachos'],
   },
   {
     tag: '07',
-    label: 'Integración',
-    title: 'Sincronización con Gesper',
-    desc: 'El círculo completo. La información de personal y jornales registrada en campo fluye automáticamente hacia Gesper para la liquidación de haberes y la gestión de RRHH — sin doble carga de datos.',
-    features: ['Datos de asistencia a Gesper', 'Liquidación automática', 'Sin doble carga', 'Información en tiempo real'],
+    label: 'Opcional',
+    title: 'Integración con Sistemas de RRHH',
+    desc: 'Los datos impactan primero en Agromovil. En empresas que usan Gesper, el software web de RRHH de Noanet para gestión de personal, asistencia y liquidación de haberes, la información puede enviarse bajo demanda. También puede adaptarse a otros sistemas de RRHH.',
+    features: ['Agromovil como sistema central', 'Integración con Gesper', 'Adaptable a otros sistemas de RRHH', 'Envío bajo demanda'],
   },
 ];
 ---
@@ -56,9 +84,9 @@ const modules = [
   <div class="container">
 
     <div class="section-head">
-      <span class="section-eyebrow">Módulos</span>
+      <span class="section-eyebrow">Modulos</span>
       <h2 class="h2">Todo lo que pasa en el campo, <span class="accent">en tu sistema.</span></h2>
-      <p class="section-sub max-w-lg mx-auto">Seis módulos integrados que digitalizan la operación agropecuaria y se sincronizan con Gesper. Sin papeles, sin señal obligatoria, sin errores.</p>
+      <p class="section-sub max-w-lg mx-auto">Agromovil centraliza la operación agrícola en un portal web y permite registrar el trabajo de campo desde el celular. Sin papeles, sin señal obligatoria y con envío de datos bajo demanda.</p>
     </div>
 
     <div class="divide-y divide-[var(--border)]">
@@ -92,9 +120,50 @@ const modules = [
             </dl>
           </div>
 
+          {m.image && (
+            <figure class="module-shot nav:col-span-2 mx-auto mt-2 w-full nav:w-[88%] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-elev)]">
+              <Image
+                src={m.image.src}
+                alt={m.image.alt}
+                loading="lazy"
+                class="w-full"
+              />
+            </figure>
+          )}
+
         </div>
       ))}
     </div>
 
   </div>
 </section>
+
+<style>
+  .module-shot {
+    position: relative;
+    box-shadow:
+      0 24px 80px -48px rgba(0, 0, 0, 0.55),
+      0 1px 0 rgba(255, 255, 255, 0.04) inset;
+  }
+
+  .module-shot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, var(--bg) 0%, transparent 8%, transparent 92%, var(--bg) 100%),
+      linear-gradient(to bottom, transparent 72%, var(--bg) 100%);
+    opacity: 0.18;
+  }
+
+  [data-theme="light"] .module-shot {
+    box-shadow:
+      0 28px 90px -58px rgba(13, 26, 13, 0.42),
+      0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  }
+
+  [data-theme="light"] .module-shot::after {
+    opacity: 0.28;
+  }
+</style>

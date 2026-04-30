@@ -17,11 +17,6 @@
     --g-green-100: #cceecb;
     --g-green-50:  #ecf9ec;
 
-    /* Brand — lime (accent CTA) */
-    --g-lime:        #a8f53d;
-    --g-lime-bright: #c0ff57;
-    --g-lime-soft:   #e8ffc4;
-
     /* Neutrals */
     --ink-0:   #ffffff;
     --ink-50:  #fafafa;
@@ -43,18 +38,18 @@
     --fg:          var(--ink-0);
     --fg-muted:    #a6b8a6;
     --fg-dim:      #5a745a;
-    --border:      rgba(168,245,61,0.10);
-    --border-strong: rgba(168,245,61,0.20);
-    --grid:        rgba(168,245,61,0.04);
-    --accent:      var(--g-lime);
-    --accent-2:    var(--g-green-300);
-    --btn-primary-bg:    var(--g-lime);
-    --btn-primary-fg:    #071407;
-    --btn-primary-hover: var(--g-lime-bright);
+    --border:      rgba(74, 154, 34, 0.14);
+    --border-strong: rgba(74, 154, 34, 0.28);
+    --grid:        rgba(74, 154, 34, 0.06);
+    --accent:      #3d8b1c;
+    --accent-2:    var(--g-green-400);
+    --btn-primary-bg:    #4a9a22;
+    --btn-primary-fg:    #ffffff;
+    --btn-primary-hover: #3a8218;
     --btn-ghost-border:  rgba(255,255,255,0.18);
-    --glow: radial-gradient(circle at 50% 0%, rgba(50,110,30,0.55), transparent 60%);
-    --card:       rgba(168,245,61,0.03);
-    --card-hover: rgba(168,245,61,0.06);
+    --glow: radial-gradient(circle at 50% 0%, rgba(60,140,30,0.42), transparent 60%);
+    --card:       rgba(74, 154, 34, 0.04);
+    --card-hover: rgba(74, 154, 34, 0.08);
   }
 
   [data-theme="light"] {
@@ -116,12 +111,12 @@
   .btn-primary {
     background: var(--btn-primary-bg);
     color: var(--btn-primary-fg);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 8px 24px -8px rgba(168,245,61,0.45);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.18) inset, 0 8px 24px -8px rgba(74,154,34,0.45);
   }
   .btn-primary:hover {
     background: var(--btn-primary-hover);
     transform: translateY(-1px);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 12px 28px -8px rgba(168,245,61,0.55);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.2) inset, 0 12px 28px -8px rgba(74,154,34,0.55);
   }
   .btn-ghost {
     @apply bg-transparent;
@@ -170,7 +165,7 @@
 
 /* Hero wind lines — tema claro/oscuro */
 .wind-line {
-  stroke: #a8f53d;
+  stroke: var(--accent);
 }
 
 [data-theme="light"] .wind-line {
