@@ -12,7 +12,7 @@ const {
 } = Astro.props;
 ---
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,7 +28,7 @@ const {
     <!-- Prevent FOUC: apply saved theme before first paint -->
     <script is:inline>
       (function () {
-        const saved = localStorage.getItem('gesper-theme') || 'dark';
+        const saved = localStorage.getItem('gesper-theme') || 'light';
         document.documentElement.setAttribute('data-theme', saved);
       })();
     </script>

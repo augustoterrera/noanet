@@ -36,7 +36,7 @@
     --ink-900: #0f0f14;
     --ink-950: #07070a;
 
-    /* Semantic tokens — dark (default) */
+    /* Semantic tokens — dark */
     --bg:          var(--ink-950);
     --bg-elev:     #0d0d12;
     --bg-elev-2:   #15151c;
