@@ -1,0 +1,561 @@
+---
+import { Image } from 'astro:assets';
+import technologiesImage from '@/images/tecnologias.webp';
+
+const technologies = [
+  {
+    tag: 'Asistencia',
+    title: 'Control de personal',
+    desc: 'Registro ágil de asistencia y novedades desde el celular, con NFC, QR o biometría según el proceso de cada empresa.',
+    items: ['NFC', 'QR', 'Biometría'],
+  },
+  {
+    tag: 'Producción',
+    title: 'Lecturas en campo',
+    desc: 'Identificación de producto, envases y movimientos con códigos de barra, QR y NFC para sostener trazabilidad operativa.',
+    items: ['Código de barras', 'QR', 'NFC'],
+  },
+  {
+    tag: 'Auditoría',
+    title: 'Georreferencia',
+    desc: 'Validación de ubicación para controlar dónde se registró cada lectura, tarea o movimiento realizado en campo.',
+    items: ['GPS', 'Ubicación', 'Trazabilidad'],
+  },
+];
+---
+
+<section class="section technologies-section" id="tecnologias">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">Tecnologías</span>
+      <h2 class="h2">Herramientas de campo, <span class="accent">integradas al proceso.</span></h2>
+      <p class="section-sub max-w-[680px] mx-auto">
+        Agromovil no es un sistema enlatado: combina dispositivos, validaciones y lecturas digitales para adaptarse al proceso de cada empresa y registrar asistencia, producción y ubicación con datos confiables desde el origen.
+      </p>
+    </div>
+
+    <div class="technology-showcase" data-technologies-carousel>
+      <div class="technology-carousel">
+        <div class="technology-carousel-head">
+          <span class="technology-counter" data-technologies-counter>01 / 03</span>
+          <div class="technology-controls">
+            <button type="button" class="technology-control" data-technologies-prev aria-label="Tecnología anterior">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
+            <button type="button" class="technology-control" data-technologies-next aria-label="Tecnología siguiente">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="technology-slides">
+          {technologies.map((technology, index) => (
+            <article
+              class:list={['technology-card', index === 0 && 'is-active']}
+              data-technologies-slide
+              aria-hidden={index === 0 ? 'false' : 'true'}
+            >
+              <div>
+                <span class="technology-tag">{technology.tag}</span>
+                <h3 class="technology-title">{technology.title}</h3>
+                <p class="technology-desc">{technology.desc}</p>
+              </div>
+
+              <ul class="technology-items" aria-label={`Tecnologías para ${technology.title}`}>
+                {technology.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div class="technology-dots" aria-label="Seleccionar tecnología">
+          {technologies.map((technology, index) => (
+            <button
+              type="button"
+              class:list={['technology-dot', index === 0 && 'is-active']}
+              data-technologies-dot
+              data-index={index}
+              aria-label={`Ver ${technology.title}`}
+              aria-current={index === 0 ? 'true' : 'false'}
+            ></button>
+          ))}
+        </div>
+      </div>
+
+      <div class="technology-visual-wrap">
+        <button
+          type="button"
+          class="technology-visual"
+          data-technologies-lightbox-open
+          aria-label="Ampliar imagen de tecnologías de Agromovil"
+        >
+          <Image
+            src={technologiesImage}
+            alt="Resumen visual de tecnologías de Agromovil: control de asistencia, control de producción en campo y georreferencia"
+            width={900}
+            widths={[420, 640, 900, 1180, 1600]}
+            loading="lazy"
+            sizes="(min-width: 900px) 58vw, calc(100vw - 56px)"
+            class="h-full w-full object-contain"
+          />
+          <span class="technology-zoom" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m16.5 16.5 4 4"></path>
+              <path d="M11 8v6"></path>
+              <path d="M8 11h6"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<dialog
+  id="technologies-lightbox"
+  class="technologies-lightbox"
+  data-technologies-lightbox
+  aria-labelledby="technologies-lightbox-title"
+>
+  <div class="technologies-lightbox-panel">
+    <div class="technologies-lightbox-bar">
+      <h3 id="technologies-lightbox-title" class="technologies-lightbox-title">Tecnologías Agromovil</h3>
+      <button
+        type="button"
+        class="technologies-lightbox-close"
+        data-technologies-lightbox-close
+        aria-label="Cerrar imagen ampliada"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round">
+          <path d="M18 6 6 18"></path>
+          <path d="m6 6 12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div class="technologies-lightbox-image">
+      <Image
+        src={technologiesImage}
+        alt="Resumen visual ampliado de tecnologías de Agromovil"
+        width={1600}
+        widths={[820, 1180, 1400, 1600]}
+        loading="lazy"
+        sizes="min(94vw, 1400px)"
+        class="h-full w-full object-contain"
+      />
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .technologies-section {
+    overflow: hidden;
+  }
+
+  .technology-showcase {
+    display: grid;
+    gap: 1.5rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    background:
+      linear-gradient(135deg, var(--card), transparent 44%),
+      var(--bg-elev);
+    box-shadow: 0 34px 100px -74px rgba(0, 0, 0, 0.72);
+  }
+
+  .technology-carousel {
+    display: grid;
+    gap: 1.25rem;
+    min-width: 0;
+    align-content: space-between;
+  }
+
+  .technology-carousel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .technology-counter {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .technology-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .technology-control {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--fg);
+    background: transparent;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+
+  .technology-control:hover,
+  .technology-control:focus-visible {
+    border-color: var(--border-strong);
+    background: var(--card);
+  }
+
+  .technology-control:focus-visible,
+  .technology-dot:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .technology-slides {
+    position: relative;
+    min-height: 238px;
+  }
+
+  .technology-card {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    align-content: center;
+    gap: 1.2rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(18px);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .technology-card.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .technology-tag {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .technology-title {
+    margin-bottom: 10px;
+    color: var(--fg);
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .technology-desc {
+    margin: 0;
+    color: var(--fg-muted);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .technology-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .technology-items li {
+    display: inline-flex;
+    min-height: 32px;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 11px;
+    color: var(--fg);
+    background: var(--bg-elev);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .technology-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .technology-dot {
+    width: 28px;
+    height: 8px;
+    border: 0;
+    border-radius: 999px;
+    padding: 0;
+    background: var(--border-strong);
+    transition:
+      width 180ms ease,
+      background 180ms ease;
+  }
+
+  .technology-dot.is-active {
+    width: 42px;
+    background: var(--accent);
+  }
+
+  .technology-visual-wrap {
+    align-self: center;
+    min-width: 0;
+  }
+
+  .technology-visual {
+    position: relative;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0;
+    background: #f1f1f3;
+    box-shadow:
+      0 30px 90px -58px rgba(0, 0, 0, 0.58),
+      0 1px 0 rgba(255, 255, 255, 0.65) inset;
+    cursor: zoom-in;
+    transition:
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+  }
+
+  .technology-visual:hover,
+  .technology-visual:focus-visible {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  .technology-visual:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .technology-zoom {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    z-index: 1;
+    display: grid;
+    width: 40px;
+    height: 40px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    color: #fff;
+    background: rgba(7, 20, 7, 0.72);
+    box-shadow: 0 12px 32px -18px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  @media (max-width: 899px) {
+    .technology-showcase {
+      padding: 14px;
+    }
+
+    .technology-carousel {
+      order: 2;
+    }
+
+    .technology-visual-wrap {
+      order: 1;
+    }
+
+    .technology-slides {
+      min-height: 260px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .technology-showcase {
+      grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+      align-items: center;
+      padding: 22px;
+    }
+
+    .technology-carousel {
+      min-height: 100%;
+      padding: 8px 8px 8px 4px;
+    }
+  }
+
+  .technologies-lightbox {
+    width: min(1400px, calc(100vw - 32px));
+    max-width: none;
+    max-height: calc(100vh - 32px);
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    color: var(--fg);
+    background: var(--bg-elev);
+    box-shadow: 0 40px 120px -52px rgba(0, 0, 0, 0.78);
+  }
+
+  .technologies-lightbox::backdrop {
+    background: rgba(3, 8, 3, 0.72);
+    backdrop-filter: blur(8px);
+  }
+
+  .technologies-lightbox-panel {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    max-height: calc(100vh - 32px);
+  }
+
+  .technologies-lightbox-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .technologies-lightbox-title {
+    color: var(--fg);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .technologies-lightbox-close {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--fg);
+    background: transparent;
+    transition:
+      border-color 180ms ease,
+      background 180ms ease;
+  }
+
+  .technologies-lightbox-close:hover,
+  .technologies-lightbox-close:focus-visible {
+    border-color: var(--border-strong);
+    background: var(--card);
+  }
+
+  .technologies-lightbox-close:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .technologies-lightbox-image {
+    display: grid;
+    min-height: 0;
+    padding: 16px;
+    place-items: center;
+  }
+
+  .technologies-lightbox-image :global(img) {
+    max-height: calc(100vh - 120px);
+  }
+
+  @media (min-width: 900px) and (max-width: 1120px) {
+    .technology-showcase {
+      grid-template-columns: minmax(250px, 0.78fr) minmax(0, 1.22fr);
+    }
+
+    .technology-title {
+      font-size: 25px;
+    }
+
+    .technology-desc {
+      font-size: 15px;
+    }
+  }
+</style>
+
+<script>
+  const technologiesCarousel = document.querySelector<HTMLElement>('[data-technologies-carousel]');
+  const technologySlides = Array.from(document.querySelectorAll<HTMLElement>('[data-technologies-slide]'));
+  const technologyDots = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-technologies-dot]'));
+  const technologyCounter = document.querySelector<HTMLElement>('[data-technologies-counter]');
+  const technologyPrevButton = document.querySelector<HTMLButtonElement>('[data-technologies-prev]');
+  const technologyNextButton = document.querySelector<HTMLButtonElement>('[data-technologies-next]');
+  let activeTechnology = 0;
+
+  function setActiveTechnology(nextIndex: number) {
+    if (!technologiesCarousel || technologySlides.length === 0) return;
+
+    activeTechnology = (nextIndex + technologySlides.length) % technologySlides.length;
+
+    technologySlides.forEach((slide, index) => {
+      const isActive = index === activeTechnology;
+      slide.classList.toggle('is-active', isActive);
+      slide.setAttribute('aria-hidden', String(!isActive));
+    });
+
+    technologyDots.forEach((dot, index) => {
+      const isActive = index === activeTechnology;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-current', String(isActive));
+    });
+
+    if (technologyCounter) {
+      technologyCounter.textContent = `${String(activeTechnology + 1).padStart(2, '0')} / ${String(technologySlides.length).padStart(2, '0')}`;
+    }
+  }
+
+  technologyPrevButton?.addEventListener('click', () => {
+    setActiveTechnology(activeTechnology - 1);
+  });
+
+  technologyNextButton?.addEventListener('click', () => {
+    setActiveTechnology(activeTechnology + 1);
+  });
+
+  technologyDots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      setActiveTechnology(Number(dot.dataset.index ?? 0));
+    });
+  });
+
+  const technologiesOpenButton = document.querySelector<HTMLButtonElement>('[data-technologies-lightbox-open]');
+  const technologiesDialog = document.querySelector<HTMLDialogElement>('[data-technologies-lightbox]');
+  const technologiesCloseButton = document.querySelector<HTMLButtonElement>('[data-technologies-lightbox-close]');
+
+  technologiesOpenButton?.addEventListener('click', () => {
+    technologiesDialog?.showModal();
+  });
+
+  technologiesCloseButton?.addEventListener('click', () => {
+    technologiesDialog?.close();
+  });
+
+  technologiesDialog?.addEventListener('click', (event) => {
+    if (event.target === technologiesDialog) {
+      technologiesDialog.close();
+    }
+  });
+</script>
