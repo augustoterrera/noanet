@@ -1,7 +1,22 @@
 ---
-const product = ['Módulos', 'Autogestión', 'Integraciones', 'Seguridad'];
-const company = ['Noanet', 'Clientes', 'Casos de éxito', 'Contacto'];
-const resources = ['Centro de ayuda', 'Blog', 'Documentación', 'Estado del servicio'];
+const product = [
+  { label: 'Módulos', href: '#modulos' },
+  { label: 'Autogestión', href: '#modulos' },
+  { label: 'Liquidación de haberes', href: '#modulos' },
+  { label: 'Seguridad', href: '#razones' },
+];
+const company = [
+  { label: 'Noanet', href: '#contacto' },
+  { label: 'Clientes', href: '#clientes' },
+  { label: 'Casos de éxito', href: '#clientes' },
+  { label: 'Contacto', href: '#contacto' },
+];
+const resources = [
+  { label: 'Demo personalizada', href: '#contacto' },
+  { label: 'Asesoramiento comercial', href: '#contacto' },
+  { label: 'Módulos recomendados', href: '#contacto' },
+  { label: 'Propuesta sin compromiso', href: '#contacto' },
+];
 ---
 
 <footer class="border-t border-[var(--border)] pt-[72px] pb-10 bg-[var(--bg)]">
@@ -21,7 +36,7 @@ const resources = ['Centro de ayuda', 'Blog', 'Documentación', 'Estado del serv
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Producto</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {product.map((item) => (
-            <li><a href={item === 'Módulos' ? '#modulos' : '#'} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -31,7 +46,7 @@ const resources = ['Centro de ayuda', 'Blog', 'Documentación', 'Estado del serv
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Empresa</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {company.map((item) => (
-            <li><a href={item === 'Contacto' ? '#contacto' : '#'} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -41,7 +56,7 @@ const resources = ['Centro de ayuda', 'Blog', 'Documentación', 'Estado del serv
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Recursos</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {resources.map((item) => (
-            <li><a href="#" class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>

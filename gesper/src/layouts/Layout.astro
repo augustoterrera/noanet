@@ -4,12 +4,24 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalPath?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
-  title = 'Gesper',
-  description = 'Administrá nóminas, asistencia, medicina laboral y capacitaciones con un sistema modular, multiconvenio y 100% auditable.',
+  title = 'Gesper | Software de Recursos Humanos para empresas',
+  description = 'Gesper centraliza legajos, asistencia, liquidación de haberes, medicina laboral, capacitación y autogestión en un sistema de RRHH modular y auditable.',
+  canonicalPath = Astro.url.pathname,
+  image = '/assets/logo-gesper.png',
+  type = 'website',
+  structuredData,
 } = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, Astro.site ?? Astro.url.origin).toString();
+const imageUrl = new URL(image, Astro.site ?? Astro.url.origin).toString();
+const siteName = 'Gesper';
 ---
 <!doctype html>
 <html lang="es" data-theme="light">
@@ -17,8 +29,27 @@ const {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Noanet" />
+    <meta
+      name="keywords"
+      content="software de recursos humanos, sistema de rrhh, liquidación de haberes, control de asistencia, legajo digital, portal de autogestión, medicina laboral, capacitación, multiconvenio, Argentina"
+    />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content="Gesper, software de recursos humanos de Noanet" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,6 +63,9 @@ const {
         document.documentElement.setAttribute('data-theme', saved);
       })();
     </script>
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
   </head>
   <body>
     <slot />

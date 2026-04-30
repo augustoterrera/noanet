@@ -7,9 +7,84 @@ import Clients from '../components/Clients.astro';
 import Reasons from '../components/Reasons.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+
+const title = 'Gesper | Software de RRHH, liquidación y asistencia';
+const description =
+  'Gestioná RRHH con Gesper: legajos, asistencia, liquidación de haberes, medicina laboral, capacitación y autogestión en un sistema modular, multiconvenio y auditable.';
+
+const modules = [
+  'Administración de Personal',
+  'Control de Asistencia',
+  'Liquidación de Haberes',
+  'Medicina Laboral',
+  'Capacitación',
+  'Portal de Autogestión',
+  'Evaluación de desempeño',
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Noanet',
+    url: Astro.site?.toString() ?? Astro.url.origin,
+    logo: new URL('/assets/logo-gesper.png', Astro.site ?? Astro.url.origin).toString(),
+    email: 'info@gesper.com',
+    areaServed: {
+      '@type': 'Country',
+      name: 'Argentina',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Gesper',
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    description,
+    provider: {
+      '@type': 'Organization',
+      name: 'Noanet',
+    },
+    areaServed: {
+      '@type': 'Country',
+      name: 'Argentina',
+    },
+    featureList: [
+      'Administración de personal y legajo digital',
+      'Control de asistencia, turnos, novedades y vacaciones',
+      'Liquidación de haberes multiconvenio',
+      'Recibos de sueldo digitales y libro de sueldo digital',
+      'Medicina laboral y documentación centralizada',
+      'Capacitación por empleado, área o perfil',
+      'Portal de autogestión para colaboradores',
+      'Auditoría de cambios y permisos granulares',
+      'Informes gerenciales en tiempo real',
+    ],
+    offers: {
+      '@type': 'Offer',
+      availability: 'https://schema.org/InStock',
+      priceSpecification: {
+        '@type': 'PriceSpecification',
+        priceCurrency: 'ARS',
+      },
+      url: new URL('/#contacto', Astro.site ?? Astro.url.origin).toString(),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Módulos de Gesper',
+    itemListElement: modules.map((name, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name,
+    })),
+  },
+];
 ---
 
-<Layout>
+<Layout title={title} description={description} structuredData={structuredData}>
   <Nav />
   <main>
     <Hero />

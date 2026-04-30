@@ -80,32 +80,40 @@ const marqueeItems = [
         style="[data-theme='light'] & { background: #fff; }"
       >
         <div class="form-field">
-          <input type="text" name="name" required placeholder="Nombre y apellido" />
+          <label for="contact-name" class="sr-only">Nombre y apellido</label>
+          <input id="contact-name" type="text" name="name" required autocomplete="name" placeholder="Nombre y apellido" />
         </div>
         <div class="form-field">
-          <input type="text" name="company" required placeholder="Empresa" />
+          <label for="contact-company" class="sr-only">Empresa</label>
+          <input id="contact-company" type="text" name="company" required autocomplete="organization" placeholder="Empresa" />
         </div>
         <div class="form-field">
-          <input type="number" name="empleados" required placeholder="Cantidad de empleados" />
+          <label for="contact-employees" class="sr-only">Cantidad de empleados</label>
+          <input id="contact-employees" type="number" name="empleados" required min="1" inputmode="numeric" placeholder="Cantidad de empleados" />
         </div>
         <div class="grid grid-cols-2 gap-4 max-xs:grid-cols-1">
           <div class="form-field">
-            <input type="text" name="rubro" required placeholder="Rubro" />
+            <label for="contact-industry" class="sr-only">Rubro</label>
+            <input id="contact-industry" type="text" name="rubro" required placeholder="Rubro" />
           </div>
           <div class="form-field">
-            <input type="text" name="cargo" required placeholder="Cargo" />
+            <label for="contact-role" class="sr-only">Cargo</label>
+            <input id="contact-role" type="text" name="cargo" required autocomplete="organization-title" placeholder="Cargo" />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 max-xs:grid-cols-1">
           <div class="form-field">
-            <input type="tel" name="phone" required placeholder="Teléfono" />
+            <label for="contact-phone" class="sr-only">Teléfono</label>
+            <input id="contact-phone" type="tel" name="phone" required autocomplete="tel" placeholder="Teléfono" />
           </div>
           <div class="form-field">
-            <input type="email" name="email" required placeholder="Correo electrónico" />
+            <label for="contact-email" class="sr-only">Correo electrónico</label>
+            <input id="contact-email" type="email" name="email" required autocomplete="email" placeholder="Correo electrónico" />
           </div>
         </div>
         <div class="form-field">
-          <textarea name="message" rows="4" placeholder="Mensaje"></textarea>
+          <label for="contact-message" class="sr-only">Mensaje</label>
+          <textarea id="contact-message" name="message" rows="4" placeholder="Mensaje"></textarea>
         </div>
         <button type="submit" class="btn btn-primary self-start mt-2">
           Enviar
