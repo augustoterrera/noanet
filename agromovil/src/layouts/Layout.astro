@@ -4,12 +4,87 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalPath?: string;
+  image?: string;
+  keywords?: string[];
+  noindex?: boolean;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
-  title = 'Agromovil — Gestión digital de operaciones en campo',
-  description = 'Agromovil centraliza la operación en campo desde un portal web y permite registrar tareas, personal, remitos, producción y stock desde el celular, con trabajo offline y envío de datos bajo demanda.',
+  title = 'Agromovil | Software de gestión agrícola y control de personal en campo',
+  description = 'Agromovil digitaliza la producción agrícola, el control de personal, lotes, remitos, cosecha, packing y stock desde celular y portal web, con operación offline, trazabilidad e integraciones de RRHH.',
+  canonicalPath = Astro.url.pathname,
+  image = '/agromovil-logo.png',
+  keywords = [
+    'software agricola',
+    'gestion agricola',
+    'control de personal en campo',
+    'trazabilidad agricola',
+    'remitos digitales',
+    'gestion de lotes',
+    'produccion agricola',
+    'Agromovil',
+    'Noanet',
+  ],
+  noindex = false,
+  schema,
 } = Astro.props;
+
+const siteUrl = (Astro.site ?? new URL(Astro.url.origin)).toString();
+const canonicalUrl = new URL(canonicalPath, siteUrl).toString();
+const imageUrl = new URL(image, siteUrl).toString();
+const robotsContent = noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
+const jsonLd = schema
+  ? Array.isArray(schema)
+    ? schema
+    : [schema]
+  : [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        name: 'Agromovil',
+        applicationCategory: 'BusinessApplication',
+        operatingSystem: 'Web, Android, iOS',
+        description,
+        image: imageUrl,
+        url: canonicalUrl,
+        publisher: {
+          '@type': 'Organization',
+          name: 'Noanet',
+          email: 'info@noanet.com.ar',
+          url: siteUrl,
+        },
+        featureList: [
+          'Control de personal en campo',
+          'Gestion de lotes y parcelas',
+          'Registro de actividades agricolas',
+          'Remitos digitales y movimientos',
+          'Cosecha, produccion y packing en campo',
+          'Trabajo offline con envio bajo demanda',
+          'Trazabilidad completa e integraciones con sistemas de RRHH',
+        ],
+        areaServed: {
+          '@type': 'Country',
+          name: 'Argentina',
+        },
+        offers: {
+          '@type': 'Offer',
+          availability: 'https://schema.org/InStock',
+          description: 'Demo personalizada y propuesta comercial segun el establecimiento.',
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Noanet',
+        email: 'info@noanet.com.ar',
+        telephone: '+54 9 381 400 0000',
+        url: siteUrl,
+        logo: imageUrl,
+        sameAs: [],
+      },
+    ];
 ---
 <!doctype html>
 <html lang="es" data-theme="light">
@@ -19,6 +94,24 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={robotsContent} />
+    <meta name="author" content="Noanet" />
+    <meta name="keywords" content={keywords.join(', ')} />
+    <meta name="theme-color" content="#356b36" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:site_name" content="Agromovil" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content="Agromovil, gestion digital de operaciones en campo" />
+    <meta property="og:locale" content="es_AR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,6 +125,7 @@ const {
         document.documentElement.setAttribute('data-theme', saved);
       })();
     </script>
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />

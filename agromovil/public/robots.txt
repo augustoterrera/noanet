@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.agromovil.noanet.com.ar/sitemap.xml

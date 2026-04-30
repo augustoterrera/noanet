@@ -7,9 +7,27 @@ import Clients from '../components/Clients.astro';
 import Reasons from '../components/Reasons.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+
+const seo = {
+  title: 'Agromovil | Software agrícola para campo, personal, lotes y producción',
+  description:
+    'Agromovil centraliza la gestión agrícola desde celular y portal web: control de personal, lotes, actividades, remitos, cosecha, packing, stock, trazabilidad, operación offline e integraciones de RRHH.',
+  canonicalPath: '/agromovil/',
+  keywords: [
+    'software agricola',
+    'gestion de campo',
+    'control de personal agricola',
+    'gestion de lotes',
+    'remitos digitales campo',
+    'trazabilidad agricola',
+    'cosecha y produccion',
+    'packing en campo',
+    'Agromovil Noanet',
+  ],
+};
 ---
 
-<Layout>
+<Layout {...seo}>
   <Nav />
   <main>
     <Hero />
