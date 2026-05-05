@@ -168,9 +168,10 @@ const modules: Module[] = [
 
     <div class="divide-y divide-[var(--border)]">
       {modules.map((m, mi) => {
-        const hasImages = Boolean(m.images?.length);
-        const hasGallery = Boolean(m.images && m.images.length > 1);
-        const hasFeaturedImage = Boolean(m.images?.some((image) => image.featured));
+        const moduleImages = m.images ?? [];
+        const hasImages = moduleImages.length > 0;
+        const hasGallery = moduleImages.length > 1;
+        const hasFeaturedImage = moduleImages.some((image) => image.featured);
 
         return (
         <div
@@ -219,8 +220,8 @@ const modules: Module[] = [
                       class="module-shot module-gallery-preview is-active overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--bg-elev)]"
                     >
                       <Image
-                        src={m.images[0].src}
-                        alt={m.images[0].alt}
+                        src={moduleImages[0].src}
+                        alt={moduleImages[0].alt}
                         width={520}
                         widths={[360, 520, 720, 960]}
                         loading="lazy"
@@ -228,18 +229,18 @@ const modules: Module[] = [
                         class="h-full w-full object-contain"
                       />
                       <span class="module-gallery-more">
-                        + ver {m.images.length} capturas
+                        + ver {moduleImages.length} capturas
                       </span>
                     </button>
                   </div>
 
                   <p class="module-gallery-count">
-                    {m.images.length} capturas disponibles
+                    {moduleImages.length} capturas disponibles
                   </p>
                 </div>
               ) : (
                 <div class="module-media module-single">
-                  {m.images?.map((image, ii) => {
+                  {moduleImages.map((image, ii) => {
                     const imageDialogId = `module-image-${mi}-${ii}`;
 
                     return (
@@ -295,7 +296,7 @@ const modules: Module[] = [
                       </button>
                     </div>
                     <div class:list={['module-lightbox-gallery', !hasFeaturedImage && 'is-phone-gallery']}>
-                      {m.images?.filter((image) => image.featured).map((image) => (
+                      {moduleImages.filter((image) => image.featured).map((image) => (
                         <figure class="module-lightbox-featured-item">
                           <Image
                             src={image.src}
@@ -310,7 +311,7 @@ const modules: Module[] = [
                         </figure>
                       ))}
                       <div class="module-lightbox-gallery-grid">
-                        {m.images?.filter((image) => !image.featured).map((image) => (
+                        {moduleImages.filter((image) => !image.featured).map((image) => (
                           <figure class="module-lightbox-gallery-item">
                             <Image
                               src={image.src}
@@ -328,7 +329,7 @@ const modules: Module[] = [
                     </div>
                   </div>
                 </dialog>
-              ) : m.images?.map((image, ii) => {
+              ) : moduleImages.map((image, ii) => {
                 const imageDialogId = `module-image-${mi}-${ii}`;
                 const imageTitleId = `module-image-title-${mi}-${ii}`;
 
