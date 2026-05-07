@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { createClientifyContact } from '@/lib/clientifyContact';
 import { sendContactEmail, type ContactFormData } from '@/lib/contactEmail';
 
 export const prerender = false;
@@ -197,6 +198,14 @@ export const POST: APIRoute = async ({ request }) => {
   } catch (error) {
     console.error('Contact email delivery failed:', error instanceof Error ? error.message : error);
     return jsonResponse({ message: 'No pudimos enviar tu consulta. Probá nuevamente.' }, 502);
+  }
+
+  try {
+    await createClientifyContact(parsed.data);
+    console.info('Clientify contact created:', parsed.data.email);
+  } catch (error) {
+    console.error('Clientify contact creation failed:', error instanceof Error ? error.message : error);
+    return jsonResponse({ message: 'Recibimos tu consulta, pero no pudimos registrarla en Clientify.' }, 502);
   }
 
   return jsonResponse({ message: 'Gracias. Te contactamos pronto.' });
