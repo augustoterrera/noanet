@@ -1,11 +1,18 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import node from '@astrojs/node';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const adapterTarget = process.env.ASTRO_ADAPTER ?? (process.env.VERCEL ? 'vercel' : 'node');
+
+const adapter =
+  adapterTarget === 'vercel'
+    ? (await import('@astrojs/vercel')).default()
+    : (await import('@astrojs/node')).default({
+        mode: 'standalone',
+      });
 
 function inlineBuiltStyles() {
   return {
@@ -71,9 +78,7 @@ async function findFiles(dir, extension) {
 export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'https://www.agromovil.noanet.com.ar',
   output: 'server',
-  adapter: node({
-    mode: 'standalone',
-  }),
+  adapter,
   integrations: [tailwind(), inlineBuiltStyles()],
   vite: {
     resolve: {
