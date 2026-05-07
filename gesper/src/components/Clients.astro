@@ -23,7 +23,7 @@ const clients = [
 ];
 ---
 
-<div class="clients-marquee-wrap relative overflow-hidden py-3" style="width: 100vw; left: 50%; transform: translateX(-50%); mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
+<div class="clients-marquee-wrap relative overflow-hidden py-3" style="width: 100%; left: 0; transform: none; mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
   <div class="clients-track flex items-center gap-10 w-max">
     {[...clients, ...clients].map((c, i) => (
       <>

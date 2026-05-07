@@ -11,7 +11,7 @@ const marqueeItems = [
 ---
 <section class="py-[120px] relative overflow-hidden" id="contacto">
   <!-- Features marquee -->
-  <div class="marquee-wrap group relative overflow-hidden py-2 mb-16" style="width: 100vw; left: 50%; transform: translateX(-50%); mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
+  <div class="marquee-wrap group relative overflow-hidden py-2 mb-16" style="width: 100%; left: 0; transform: none; mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%); -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 88%, transparent 100%);">
     <div
       class="flex gap-12 w-max text-[13px] text-[var(--fg-dim)] group-hover:[animation-play-state:paused]"
       style="animation: marquee 40s linear infinite; will-change: transform;"
@@ -76,52 +76,65 @@ const marqueeItems = [
       <!-- Right: form -->
       <form
         id="contactForm"
+        novalidate
+        aria-busy="false"
         class="relative bg-[var(--bg)] border border-[var(--border)] rounded-[20px] p-9 max-nav:p-6 flex flex-col gap-[18px]"
         style="[data-theme='light'] & { background: #fff; }"
       >
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="contact-hp" aria-hidden="true" />
         <div class="form-field">
           <label for="contact-name" class="sr-only">Nombre y apellido</label>
-          <input id="contact-name" type="text" name="name" required autocomplete="name" placeholder="Nombre y apellido" />
+          <input id="contact-name" type="text" name="name" required autocomplete="name" maxlength="90" placeholder="Nombre y apellido" />
         </div>
         <div class="form-field">
           <label for="contact-company" class="sr-only">Empresa</label>
-          <input id="contact-company" type="text" name="company" required autocomplete="organization" placeholder="Empresa" />
+          <input id="contact-company" type="text" name="company" required autocomplete="organization" maxlength="120" placeholder="Empresa" />
         </div>
         <div class="form-field">
           <label for="contact-employees" class="sr-only">Cantidad de empleados</label>
-          <input id="contact-employees" type="number" name="empleados" required min="1" inputmode="numeric" placeholder="Cantidad de empleados" />
+          <input id="contact-employees" type="number" name="employees" required min="1" max="1000000" inputmode="numeric" placeholder="Cantidad de empleados" />
         </div>
         <div class="grid grid-cols-2 gap-4 max-xs:grid-cols-1">
           <div class="form-field">
             <label for="contact-industry" class="sr-only">Rubro</label>
-            <input id="contact-industry" type="text" name="rubro" required placeholder="Rubro" />
+            <input id="contact-industry" type="text" name="industry" required maxlength="90" placeholder="Rubro" />
           </div>
           <div class="form-field">
             <label for="contact-role" class="sr-only">Cargo</label>
-            <input id="contact-role" type="text" name="cargo" required autocomplete="organization-title" placeholder="Cargo" />
+            <input id="contact-role" type="text" name="role" required autocomplete="organization-title" maxlength="90" placeholder="Cargo" />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4 max-xs:grid-cols-1">
           <div class="form-field">
             <label for="contact-phone" class="sr-only">Teléfono</label>
-            <input id="contact-phone" type="tel" name="phone" required autocomplete="tel" placeholder="Teléfono" />
+            <input id="contact-phone" type="tel" name="phone" required autocomplete="tel" maxlength="40" placeholder="Teléfono" />
           </div>
           <div class="form-field">
             <label for="contact-email" class="sr-only">Correo electrónico</label>
-            <input id="contact-email" type="email" name="email" required autocomplete="email" placeholder="Correo electrónico" />
+            <input id="contact-email" type="email" name="email" required autocomplete="email" maxlength="160" placeholder="Correo electrónico" />
           </div>
         </div>
         <div class="form-field">
           <label for="contact-message" class="sr-only">Mensaje</label>
-          <textarea id="contact-message" name="message" rows="4" placeholder="Mensaje"></textarea>
+          <textarea id="contact-message" name="message" rows="4" maxlength="1200" placeholder="Mensaje"></textarea>
         </div>
         <button type="submit" class="btn btn-primary self-start mt-2">
-          Enviar
+          <span data-label>Enviar</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </button>
-        <div id="formSuccess" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, #2bb673 14%, transparent); border: 1px solid color-mix(in srgb, #2bb673 35%, transparent); color: #2bb673;">
+        <div id="formSuccess" role="status" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, #2bb673 14%, transparent); border: 1px solid color-mix(in srgb, #2bb673 35%, transparent); color: #2bb673;">
           <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-          ¡Gracias! Te contactamos en menos de 24 horas.
+          ¡Gracias! Te contactamos pronto.
+        </div>
+        <div id="formError" role="alert" class="hidden items-center gap-[10px] px-4 py-[14px] rounded-[10px] text-sm font-semibold" style="background: color-mix(in srgb, var(--g-coral) 10%, transparent); border: 1px solid color-mix(in srgb, var(--g-coral) 25%, transparent); color: var(--g-coral);">
+          <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v5M12 16h.01"/></svg>
+          <span>No pudimos enviar tu consulta. Probá nuevamente.</span>
+        </div>
+        <div id="formLoading" class="form-loading" aria-hidden="true">
+          <div class="loading-pulse">
+            <span></span>
+          </div>
+          <p>Enviando</p>
         </div>
       </form>
 
@@ -162,11 +175,80 @@ const marqueeItems = [
     box-sizing: border-box;
     transition: border-color 0.15s, box-shadow 0.15s;
   }
+  #contactForm.is-loading {
+    cursor: wait;
+  }
+  #contactForm.is-loading .form-field,
+  #contactForm.is-loading .btn,
+  #contactForm.is-loading #formSuccess,
+  #contactForm.is-loading #formError {
+    filter: saturate(0.9);
+  }
+  #contactForm.is-loading .form-field {
+    opacity: 0.62;
+  }
+  #contactForm.is-loading .btn {
+    pointer-events: none;
+  }
+  .form-loading {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    border-radius: 20px;
+    background:
+      linear-gradient(color-mix(in srgb, var(--bg) 74%, transparent), color-mix(in srgb, var(--bg) 74%, transparent)),
+      radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--g-plum-500) 14%, transparent), transparent 48%);
+    color: var(--fg);
+    font-size: 14px;
+    font-weight: 700;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.985);
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+  #contactForm.is-loading .form-loading {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+  .form-loading p {
+    margin: 0;
+  }
+  .loading-pulse {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--g-plum-500) 13%, transparent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--g-plum-500) 28%, transparent);
+  }
+  .loading-pulse span {
+    width: 18px;
+    height: 18px;
+    border: 2.5px solid color-mix(in srgb, var(--g-plum-500) 30%, transparent);
+    border-top-color: var(--g-plum-500);
+    border-radius: 999px;
+    animation: contact-spin 0.75s linear infinite;
+  }
   [data-theme="light"] .form-field input,
   [data-theme="light"] .form-field textarea {
     background: #fbfafc;
   }
   .form-field textarea { resize: vertical; min-height: 100px; }
+  .contact-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
   .form-field input::placeholder,
   .form-field textarea::placeholder { color: var(--fg-dim); }
   .form-field input:focus,
@@ -174,19 +256,107 @@ const marqueeItems = [
     border-color: var(--accent);
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--g-plum-500) 18%, transparent);
   }
+  .form-field input:-webkit-autofill,
+  .form-field input:-webkit-autofill:hover,
+  .form-field input:-webkit-autofill:focus,
+  .form-field textarea:-webkit-autofill,
+  .form-field textarea:-webkit-autofill:hover,
+  .form-field textarea:-webkit-autofill:focus {
+    border-color: var(--border);
+    -webkit-text-fill-color: var(--fg);
+    caret-color: var(--fg);
+    box-shadow: 0 0 0 1000px var(--bg-elev-2) inset;
+    transition: background-color 9999s ease-out, color 9999s ease-out;
+  }
+  [data-theme="light"] .form-field input:-webkit-autofill,
+  [data-theme="light"] .form-field input:-webkit-autofill:hover,
+  [data-theme="light"] .form-field input:-webkit-autofill:focus,
+  [data-theme="light"] .form-field textarea:-webkit-autofill,
+  [data-theme="light"] .form-field textarea:-webkit-autofill:hover,
+  [data-theme="light"] .form-field textarea:-webkit-autofill:focus {
+    box-shadow: 0 0 0 1000px #fbfafc inset;
+  }
+  .form-field input:-webkit-autofill:focus,
+  .form-field textarea:-webkit-autofill:focus {
+    border-color: var(--accent);
+    box-shadow:
+      0 0 0 1000px var(--bg-elev-2) inset,
+      0 0 0 3px color-mix(in srgb, var(--g-plum-500) 18%, transparent);
+  }
+  [data-theme="light"] .form-field input:-webkit-autofill:focus,
+  [data-theme="light"] .form-field textarea:-webkit-autofill:focus {
+    box-shadow:
+      0 0 0 1000px #fbfafc inset,
+      0 0 0 3px color-mix(in srgb, var(--g-plum-500) 18%, transparent);
+  }
+  @keyframes contact-spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
 
 <script>
   const form = document.getElementById('contactForm') as HTMLFormElement;
   const success = document.getElementById('formSuccess')!;
+  const error = document.getElementById('formError')!;
+  const errorMessage = error.querySelector('span')!;
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    form.querySelectorAll<HTMLElement>('input, textarea, button').forEach(el => {
-      (el as HTMLInputElement).disabled = true;
+  const setFormDisabled = (disabled: boolean) => {
+    form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>('input, textarea, button').forEach(el => {
+      el.disabled = disabled;
     });
-    (form.querySelector('.btn') as HTMLElement).style.display = 'none';
-    success.classList.remove('hidden');
-    success.classList.add('flex');
+    form?.classList.toggle('is-loading', disabled);
+    form?.setAttribute('aria-busy', String(disabled));
+  };
+
+  const showMessage = (element: HTMLElement) => {
+    element.classList.remove('hidden');
+    element.classList.add('flex');
+  };
+
+  const hideMessage = (element: HTMLElement) => {
+    element.classList.add('hidden');
+    element.classList.remove('flex');
+  };
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    hideMessage(success);
+    hideMessage(error);
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
+
+    setFormDisabled(true);
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.message || 'No pudimos enviar tu consulta. Probá nuevamente.');
+      }
+
+      form.reset();
+      showMessage(success);
+    } catch (err) {
+      errorMessage.textContent = err instanceof Error ? err.message : 'No pudimos enviar tu consulta. Probá nuevamente.';
+      showMessage(error);
+    } finally {
+      setFormDisabled(false);
+    }
   });
 </script>

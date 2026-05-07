@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import node from '@astrojs/node';
 import { readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -69,6 +70,10 @@ async function findFiles(dir, extension) {
 
 export default defineConfig({
   site: process.env.PUBLIC_SITE_URL || 'https://www.agromovil.noanet.com.ar',
+  output: 'server',
+  adapter: node({
+    mode: 'standalone',
+  }),
   integrations: [tailwind(), inlineBuiltStyles()],
   vite: {
     resolve: {
