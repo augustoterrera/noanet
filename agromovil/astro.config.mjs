@@ -8,15 +8,13 @@ const adapterTarget = process.env.ASTRO_ADAPTER ?? (process.env.VERCEL ? 'vercel
 
 const adapter =
   adapterTarget === 'vercel'
-    ? (await import('@astrojs/vercel')).default({
-        imageService: true,
-      })
+    ? (await import('@astrojs/vercel')).default()
     : (await import('@astrojs/node')).default({
         mode: 'standalone',
       });
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL || 'https://www.agromovil.noanet.com.ar',
+  site: process.env.PUBLIC_SITE_URL ?? 'https://www.agromovil.noanet.com.ar',
   output: 'server',
   adapter,
   integrations: [tailwind()],

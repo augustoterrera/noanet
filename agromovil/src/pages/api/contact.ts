@@ -27,6 +27,7 @@ function jsonResponse(body: unknown, status = 200) {
     headers: {
       'content-type': 'application/json; charset=utf-8',
       'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff',
     },
   });
 }
@@ -59,6 +60,12 @@ function isRateLimited(clientId: string) {
   const now = Date.now();
   const current = rateLimit.get(clientId);
 
+  for (const [key, value] of rateLimit) {
+    if (value.resetAt <= now) {
+      rateLimit.delete(key);
+    }
+  }
+
   if (!current || current.resetAt <= now) {
     rateLimit.set(clientId, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
     return false;
@@ -70,15 +77,9 @@ function isRateLimited(clientId: string) {
 
 function isAllowedOrigin(request: Request) {
   const origin = request.headers.get('origin');
+  const referer = request.headers.get('referer');
 
-  if (!origin) {
-    return true;
-  }
-
-  const allowedOrigins = new Set([
-    new URL(request.url).origin,
-  ]);
-
+  const allowedOrigins = new Set([new URL(request.url).origin]);
   const publicSiteUrl = import.meta.env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL;
 
   if (publicSiteUrl) {
@@ -89,7 +90,23 @@ function isAllowedOrigin(request: Request) {
     }
   }
 
-  return allowedOrigins.has(origin);
+  if (origin) {
+    return allowedOrigins.has(origin);
+  }
+
+  if (referer) {
+    try {
+      return allowedOrigins.has(new URL(referer).origin);
+    } catch {
+      return false;
+    }
+  }
+
+  return false;
+}
+
+function isPlainObject(value: unknown): value is ContactPayload {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function parseContactPayload(payload: ContactPayload) {
@@ -144,7 +161,13 @@ export const POST: APIRoute = async ({ request }) => {
       return jsonResponse({ message: 'La consulta es demasiado extensa.' }, 413);
     }
 
-    payload = JSON.parse(body);
+    const parsedBody: unknown = JSON.parse(body);
+
+    if (!isPlainObject(parsedBody)) {
+      return jsonResponse({ message: 'No pudimos leer los datos del formulario.' }, 400);
+    }
+
+    payload = parsedBody;
   } catch {
     return jsonResponse({ message: 'No pudimos leer los datos del formulario.' }, 400);
   }

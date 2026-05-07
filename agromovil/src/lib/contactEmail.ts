@@ -18,8 +18,12 @@ const fieldLabels: Record<keyof ContactFormData, string> = {
 
 let transporter: ReturnType<typeof nodemailer.createTransport> | undefined;
 
+function envValue(name: string) {
+  return (process.env[name] || import.meta.env[name])?.trim();
+}
+
 function requiredEnv(name: string) {
-  const value = (import.meta.env[name] || process.env[name])?.trim();
+  const value = envValue(name);
 
   if (!value) {
     throw new Error(`Missing required environment variable: ${name}`);
@@ -35,6 +39,10 @@ function escapeHtml(value: string) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function cleanHeader(value: string) {
+  return value.replace(/[\r\n]+/g, ' ').trim();
 }
 
 function buildPlainText(data: ContactFormData) {
@@ -112,17 +120,20 @@ export async function sendContactEmail(data: ContactFormData) {
         user: requiredEnv('SMTP_USER'),
         pass: requiredEnv('SMTP_PASS'),
       },
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
     });
   }
 
   await transporter.sendMail({
     from: {
-      name: (import.meta.env.SMTP_FROM_NAME || process.env.SMTP_FROM_NAME)?.trim() || 'Agromovil Web',
+      name: cleanHeader(envValue('SMTP_FROM_NAME') || 'Agromovil Web'),
       address: requiredEnv('SMTP_FROM_EMAIL'),
     },
     to: requiredEnv('CONTACT_TO_EMAIL'),
     replyTo: data.email,
-    subject: (import.meta.env.CONTACT_SUBJECT || process.env.CONTACT_SUBJECT)?.trim() || 'Nueva consulta desde la web de Agromovil',
+    subject: cleanHeader(envValue('CONTACT_SUBJECT') || 'Nueva consulta desde la web de Agromovil'),
     text: buildPlainText(data),
     html: buildHtml(data),
   });
