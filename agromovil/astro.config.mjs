@@ -8,7 +8,9 @@ const adapterTarget = process.env.ASTRO_ADAPTER ?? (process.env.VERCEL ? 'vercel
 
 const adapter =
   adapterTarget === 'vercel'
-    ? (await import('@astrojs/vercel')).default()
+    ? (await import('@astrojs/vercel')).default({
+        imageService: true,
+      })
     : (await import('@astrojs/node')).default({
         mode: 'standalone',
       });
