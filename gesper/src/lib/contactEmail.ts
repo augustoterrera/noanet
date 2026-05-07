@@ -51,6 +51,12 @@ function cleanHeader(value: string) {
   return value.replace(/[\r\n]+/g, ' ').trim();
 }
 
+function buildSubject(data: ContactFormData) {
+  const sender = cleanHeader(data.company || data.name);
+
+  return cleanHeader(`Nueva consulta Gesper - ${sender}`);
+}
+
 function buildPlainText(data: ContactFormData) {
   return (Object.keys(fieldLabels) as Array<keyof ContactFormData>)
     .map((key) => `${fieldLabels[key]}: ${data[key] || '-'}`)
@@ -139,7 +145,7 @@ export async function sendContactEmail(data: ContactFormData) {
     },
     to: requiredEnv('CONTACT_TO_EMAIL'),
     replyTo: data.email,
-    subject: cleanHeader('Nueva consulta desde la web de Gesper'),
+    subject: buildSubject(data),
     text: buildPlainText(data),
     html: buildHtml(data),
   });
