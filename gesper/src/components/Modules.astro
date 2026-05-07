@@ -204,7 +204,11 @@ const modules: Module[] = [
                   </svg>
                 </button>
               </div>
-              <div class="module-lightbox-image">
+              <div class="module-lightbox-image is-loading" data-lightbox-image>
+                <div class="module-lightbox-loader" role="status" aria-live="polite">
+                  <span class="module-lightbox-spinner" aria-hidden="true"></span>
+                  <span class="sr-only">Cargando imagen</span>
+                </div>
                 <Image
                   src={m.image.src}
                   alt={m.image.alt}
@@ -448,15 +452,74 @@ const modules: Module[] = [
   }
 
   .module-lightbox-image {
+    position: relative;
     display: grid;
     min-height: 0;
     padding: 16px;
     place-items: center;
     background: #f6f7f4;
+    overflow: hidden;
   }
 
   .module-lightbox-image :global(img) {
     max-height: calc(100vh - 120px);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .module-lightbox-image.is-loaded :global(img) {
+    opacity: 1;
+  }
+
+  .module-lightbox-loader {
+    position: absolute;
+    inset: 16px;
+    z-index: 1;
+    display: grid;
+    gap: 12px;
+    place-content: center;
+    place-items: center;
+    color: var(--fg-muted);
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0)),
+      #f6f7f4;
+    background-size: 180% 100%, auto;
+    opacity: 1;
+    pointer-events: none;
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease;
+    animation: module-loader-sheen 1.2s ease-in-out infinite;
+  }
+
+  .module-lightbox-image.is-loaded .module-lightbox-loader {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .module-lightbox-spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(30, 30, 36, 0.16);
+    border-top-color: var(--accent);
+    border-radius: 999px;
+    animation: module-loader-spin 780ms linear infinite;
+  }
+
+  @keyframes module-loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes module-loader-sheen {
+    0% {
+      background-position: 160% 0, 0 0;
+    }
+
+    100% {
+      background-position: -60% 0, 0 0;
+    }
   }
 
   [data-theme="light"] .module-shot {
@@ -506,12 +569,34 @@ const modules: Module[] = [
   const openButtons = document.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]');
   const dialogs = document.querySelectorAll<HTMLDialogElement>('[data-module-dialog]');
 
+  function updateLightboxImageState(dialog: HTMLDialogElement) {
+    const imageWrap = dialog.querySelector<HTMLElement>('[data-lightbox-image]');
+    const image = imageWrap?.querySelector<HTMLImageElement>('img');
+
+    if (!imageWrap || !image) return;
+
+    const markLoaded = () => {
+      imageWrap.classList.remove('is-loading');
+      imageWrap.classList.add('is-loaded');
+    };
+
+    if (image.complete && image.naturalWidth > 0) {
+      markLoaded();
+      return;
+    }
+
+    imageWrap.classList.remove('is-loaded');
+    imageWrap.classList.add('is-loading');
+    image.addEventListener('load', markLoaded, { once: true });
+  }
+
   openButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const dialogId = button.dataset.lightboxOpen;
       const dialog = dialogId ? document.getElementById(dialogId) : null;
 
       if (dialog instanceof HTMLDialogElement) {
+        updateLightboxImageState(dialog);
         dialog.showModal();
       }
     });
