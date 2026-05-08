@@ -11,6 +11,8 @@ declare namespace NodeJS {
     SMTP_FROM_EMAIL?: string;
     SMTP_FROM_NAME?: string;
     CONTACT_TO_EMAIL?: string;
+    CLIENTIFY_API_KEY?: string;
+    CLIENTIFY_API_URL?: string;
     PUBLIC_SITE_URL?: string;
   }
 }
