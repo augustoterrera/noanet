@@ -9,6 +9,7 @@ const navLinks = [
   { href: '#obras', label: 'Obras' },
   { href: '#contact-center', label: 'Contact Center' },
   { href: '#clientes', label: 'Clientes' },
+  { href: '#noanet-wifi', label: 'Noanet Wifi' },
   { href: '#contacto', label: 'Contacto' },
 ];
 ---
@@ -26,7 +27,7 @@ const navLinks = [
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden items-center gap-5 lg:gap-7 md:flex">
+      <div class="hidden items-center gap-4 lg:gap-5 md:flex">
         {navLinks.map(link => (
           <a 
             href={link.href} 
