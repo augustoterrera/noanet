@@ -1,4 +1,6 @@
 # syntax=docker/dockerfile:1.7
+# Build context: repo root. Required build arg: LANDING (agromovil|gesper|landing).
+ARG LANDING
 
 FROM node:22-bookworm-slim AS base
 ENV PNPM_HOME=/pnpm
@@ -7,16 +9,22 @@ RUN corepack enable && corepack prepare pnpm@10 --activate
 WORKDIR /app
 
 FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+ARG LANDING
+COPY ${LANDING}/package.json ${LANDING}/pnpm-lock.yaml ${LANDING}/pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 
 FROM base AS build
+ARG LANDING
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY ${LANDING}/ ./
+# Shared assets must live at repo root sibling so `../../../shared-assets/...`
+# from <landing>/src/components/*.astro resolves correctly.
+COPY shared-assets /shared-assets
 RUN pnpm build
 
 FROM base AS prod-deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+ARG LANDING
+COPY ${LANDING}/package.json ${LANDING}/pnpm-lock.yaml ${LANDING}/pnpm-workspace.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
 
 FROM node:22-bookworm-slim AS runtime
@@ -24,8 +32,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=4321
+ARG LANDING
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
-COPY package.json ./
+COPY ${LANDING}/package.json ./
 EXPOSE 4321
 CMD ["node", "./dist/server/entry.mjs"]

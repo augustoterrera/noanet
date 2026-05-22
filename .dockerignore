@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/.astro
+**/.cache
+**/.vercel
+**/.vscode
+**/.idea
+**/.DS_Store
+.git
+.github
+*.log
