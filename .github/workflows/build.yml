@@ -1,0 +1,155 @@
+name: Build landings
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'agromovil/**'
+      - 'gesper/**'
+      - 'landing/**'
+      - 'shared-assets/**'
+      - '.github/workflows/build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'agromovil/**'
+      - 'gesper/**'
+      - 'landing/**'
+      - 'shared-assets/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+    inputs:
+      landings:
+        description: 'Landings a buildear (csv: agromovil,gesper,landing). Vacio = todas.'
+        required: false
+        default: ''
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: Detect changed landings
+    runs-on: ubuntu-latest
+    outputs:
+      landings: ${{ steps.set.outputs.landings }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - id: filter
+        if: github.event_name != 'workflow_dispatch'
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            shared:
+              - 'shared-assets/**'
+              - '.github/workflows/build.yml'
+            agromovil:
+              - 'agromovil/**'
+            gesper:
+              - 'gesper/**'
+            landing:
+              - 'landing/**'
+
+      - id: set
+        shell: bash
+        env:
+          DISPATCH_INPUT: ${{ inputs.landings }}
+        run: |
+          set -euo pipefail
+          all='["agromovil","gesper","landing"]'
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            if [[ -z "${DISPATCH_INPUT// }" ]]; then
+              echo "landings=$all" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            picks=()
+            IFS=',' read -ra parts <<< "$DISPATCH_INPUT"
+            for p in "${parts[@]}"; do
+              name="$(echo "$p" | xargs)"
+              case "$name" in
+                agromovil|gesper|landing) picks+=("\"$name\"") ;;
+                *) echo "Unknown landing: $name" >&2; exit 1 ;;
+              esac
+            done
+            list="[$(IFS=,; echo "${picks[*]}")]"
+            echo "landings=$list" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          shared='${{ steps.filter.outputs.shared }}'
+          if [[ "$shared" == "true" ]]; then
+            echo "landings=$all" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          picks=()
+          [[ "${{ steps.filter.outputs.agromovil }}" == "true" ]] && picks+=("\"agromovil\"")
+          [[ "${{ steps.filter.outputs.gesper }}" == "true" ]] && picks+=("\"gesper\"")
+          [[ "${{ steps.filter.outputs.landing }}" == "true" ]] && picks+=("\"landing\"")
+
+          if [[ ${#picks[@]} -eq 0 ]]; then
+            echo "landings=[]" >> "$GITHUB_OUTPUT"
+          else
+            list="[$(IFS=,; echo "${picks[*]}")]"
+            echo "landings=$list" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    name: Build ${{ matrix.landing }}
+    needs: changes
+    if: needs.changes.outputs.landings != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        landing: ${{ fromJson(needs.changes.outputs.landings) }}
+    env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository_owner }}/noanet-${{ matrix.landing }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,format=short
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+
+      - name: Build & push image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./${{ matrix.landing }}
+          file: ./${{ matrix.landing }}/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.landing }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.landing }}
+          provenance: false
