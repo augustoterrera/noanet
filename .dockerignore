@@ -9,3 +9,5 @@
 .git
 .github
 *.log
+**/.env
+**/.env.*

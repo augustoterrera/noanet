@@ -11,7 +11,8 @@ type ClientifyContactPayload = {
 };
 
 function envValue(name: string) {
-  return (process.env[name] || import.meta.env[name])?.trim();
+  // No usar import.meta.env: el acceso dinámico hace que Vite incruste todo el .env en el bundle.
+  return process.env[name]?.trim();
 }
 
 function requiredEnv(name: string) {
