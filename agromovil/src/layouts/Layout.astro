@@ -52,7 +52,7 @@ const jsonLd = schema
         publisher: {
           '@type': 'Organization',
           name: 'Noanet',
-          email: 'info@noanet.com.ar',
+          email: 'contacto@noanet.com.ar',
           url: siteUrl,
         },
         featureList: [
@@ -78,7 +78,7 @@ const jsonLd = schema
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'Noanet',
-        email: 'info@noanet.com.ar',
+        email: 'contacto@noanet.com.ar',
         telephone: '+54 9 381 400 0000',
         url: siteUrl,
         logo: imageUrl,
@@ -119,7 +119,7 @@ const jsonLd = schema
         document.documentElement.setAttribute('data-theme', saved);
       })();
     </script>
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />

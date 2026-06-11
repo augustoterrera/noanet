@@ -334,19 +334,19 @@ const socialLinks = [
     observer.observe(el);
   });
 
-  const form = document.getElementById('contact-form');
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const success = document.getElementById('form-success');
   const error = document.getElementById('form-error');
 
-  const setMessage = (element, visible, message) => {
+  const setMessage = (element: HTMLElement | null, visible: boolean, message?: string) => {
     if (!element) return;
     if (message) element.textContent = message;
     element.classList.toggle('hidden', !visible);
     element.classList.toggle('flex', visible);
   };
 
-  const setFormDisabled = (disabled) => {
-    form?.querySelectorAll('input, textarea, button').forEach((el) => {
+  const setFormDisabled = (disabled: boolean) => {
+    form?.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>('input, textarea, button').forEach((el) => {
       el.disabled = disabled;
     });
     form?.classList.toggle('is-loading', disabled);

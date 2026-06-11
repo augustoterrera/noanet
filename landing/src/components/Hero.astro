@@ -7,7 +7,7 @@ const services = [
 ];
 ---
 
-<section id="hero" class="relative flex min-h-[560px] overflow-hidden bg-white pt-20 lg:min-h-[760px] lg:items-center">
+<section id="hero" class="relative flex min-h-140 overflow-hidden bg-white pt-20 lg:min-h-190 lg:items-center">
 
   <div
     class="absolute inset-y-0 right-0 hidden w-[48%] bg-navy lg:block [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
@@ -32,9 +32,9 @@ const services = [
         Soluciones tecnológicas innovadoras y a medida para <span class="text-accent">empresas</span>
       </h1>
 
-      <div class="hero-divider mt-6 h-[3px] w-12 bg-navy"></div>
+      <div class="hero-divider mt-6 h-0.75 w-12 bg-navy"></div>
 
-      <p class="hero-fade mt-6 max-w-[34rem] text-base font-light leading-8 text-text-muted [animation-delay:450ms] sm:text-lg">
+      <p class="hero-fade mt-6 max-w-136 text-base font-light leading-8 text-text-muted [animation-delay:450ms] sm:text-lg">
         Integramos productos y tecnologías TIC según las necesidades, infraestructura y requerimientos de cada cliente para cumplir sus objetivos de una manera creativa.
       </p>
 
@@ -57,7 +57,7 @@ const services = [
     <div class="relative z-30 flex flex-col gap-4 lg:items-end lg:pl-12">
       {services.map((service, index) => (
         <article
-          class="service-card w-full border border-white/15 border-l-[3px] border-l-accent bg-white/[0.07] px-5 py-4 backdrop-blur-sm lg:max-w-[280px]"
+          class="service-card w-full border border-white/15 border-l-[3px] border-l-accent bg-white/[0.07] px-5 py-4 backdrop-blur-sm lg:max-w-70"
           style={`animation-delay: ${700 + index * 150}ms`}
         >
           <span class="block text-[0.63rem] font-bold uppercase tracking-[0.15em] text-white/45">{service.label}</span>
