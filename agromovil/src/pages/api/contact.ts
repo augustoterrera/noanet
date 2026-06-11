@@ -80,7 +80,11 @@ function isAllowedOrigin(request: Request) {
   const origin = request.headers.get('origin');
   const referer = request.headers.get('referer');
 
-  const allowedOrigins = new Set([new URL(request.url).origin]);
+  const allowedOrigins = new Set([
+    new URL(request.url).origin,
+    'https://agromovil.noanet.com.ar',
+    'https://www.agromovil.noanet.com.ar',
+  ]);
   const publicSiteUrl = import.meta.env.PUBLIC_SITE_URL || process.env.PUBLIC_SITE_URL;
 
   if (publicSiteUrl) {

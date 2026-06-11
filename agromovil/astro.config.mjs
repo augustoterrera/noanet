@@ -14,7 +14,7 @@ const adapter =
       });
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL ?? 'https://www.agromovil.noanet.com.ar',
+  site: process.env.PUBLIC_SITE_URL ?? 'https://agromovil.noanet.com.ar',
   output: 'server',
   adapter,
   integrations: [tailwind()],

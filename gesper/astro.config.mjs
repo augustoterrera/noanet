@@ -11,7 +11,7 @@ const adapter =
       });
 
 export default defineConfig({
-  site: process.env.PUBLIC_SITE_URL ?? 'https://gesper.noanet.com',
+  site: process.env.PUBLIC_SITE_URL ?? 'https://gesper.noanet.com.ar',
   output: 'server',
   adapter,
   integrations: [tailwind()],
