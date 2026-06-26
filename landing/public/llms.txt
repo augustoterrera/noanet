@@ -1,0 +1,28 @@
+# Noanet
+
+> Noanet S.A. es una empresa argentina de soluciones tecnológicas (TIC) con más de 20 años de trayectoria y sede en San Miguel de Tucumán. Integra tecnología, desarrollo de software, conectividad, data center y contact center a medida de cada empresa, desde la implementación hasta el soporte continuo.
+
+## Soluciones y productos
+
+- [Gesper](https://gesper.vercel.app): Sistema web modular propio para la gestión total de Recursos Humanos (legajo digital, asistencia, liquidación de sueldos, medicina laboral, capacitación y autogestión).
+- [Agromovil](https://agromovil.vercel.app): Sistema propio para empresas agrícolas que gestiona asistencia, lotes, tareas, remitos, producción y packing en campo, con operación offline y sincronización posterior.
+- [Cenit](https://www.noanet.com.ar/cenit/): Seguimiento vehicular por GPS para transporte de pasajeros, carga o cuadrillas, con mapa en tiempo real, reportes, eventos configurables e historial de flota.
+- Conect: Conectividad segura entre puntos de trabajo y sucursales con infraestructura propia, incluso en zonas remotas (diseño, instalación, administración y mantenimiento de redes).
+- Ciberseguridad: Servicios integrales de protección de activos digitales, continuidad operativa y gestión del riesgo bajo estándares ISO/IEC 27001-27002 y NIST.
+- Data Center: Administración de servidores y bases de datos, hosting, housing, almacenamiento, backup/restore y energía con UPS y grupos electrógenos.
+- Contact Center: Atención omnicanal inbound y outbound (teléfono, chat, email, redes sociales y mensajería).
+- Noanet Wifi: Internet inalámbrico para hogares.
+
+## Contacto
+
+- Dirección: Marina Alfaro 1110, San Miguel de Tucumán, Tucumán (CP 4000), Argentina
+- Teléfono: 0810 555 6626
+- Email: comercial@noanet.com.ar
+- Sitio: https://www.noanet.com.ar
+
+## Enlaces
+
+- [LinkedIn](https://www.linkedin.com/company/25039841/)
+- [Instagram](https://www.instagram.com/noanet_sa/)
+- [Facebook](https://www.facebook.com/profile.php?id=100078094231185)
+- [Línea Ética](https://secure.noanet.com.ar/lineaetica)

@@ -7,22 +7,15 @@ const services = [
 ];
 ---
 
-<section id="hero" class="relative flex min-h-140 overflow-hidden bg-white pt-20 lg:min-h-190 lg:items-center">
-
-  <div
-    class="absolute inset-y-0 right-0 hidden w-[48%] bg-navy lg:block [clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
-    aria-hidden="true"
-  ></div>
-  <div class="absolute inset-x-0 top-0 h-[40%] bg-navy lg:hidden" aria-hidden="true"></div>
-
+<section id="hero" class="relative overflow-hidden bg-white pt-20 lg:flex lg:min-h-190 lg:items-center">
   <canvas
     id="hero-network-canvas"
-    class="absolute inset-x-0 top-0 h-[40%] w-full lg:inset-y-0 lg:left-auto lg:h-full lg:w-[48%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
+    class="hidden bg-navy lg:absolute lg:inset-y-0 lg:right-0 lg:block lg:h-full lg:w-[48%] lg:[clip-path:polygon(12%_0,100%_0,100%_100%,0_100%)]"
     aria-hidden="true"
   ></canvas>
 
-  <div class="relative z-30 mx-auto grid w-full max-w-7xl gap-8 px-6 pb-14 pt-6 sm:px-8 lg:-translate-y-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.8fr)] lg:items-center lg:gap-12 lg:px-10 lg:pb-24 lg:pt-16">
-    <div class="max-w-xl pt-[30vh] lg:pt-0">
+  <div class="relative z-30 mx-auto grid w-full max-w-7xl gap-8 px-6 pb-14 pt-8 sm:px-8 lg:-translate-y-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(360px,0.8fr)] lg:items-center lg:gap-12 lg:px-10 lg:pb-24 lg:pt-16">
+    <div class="max-w-xl">
       <div class="hero-fade flex items-center gap-3 text-[0.68rem] font-bold uppercase tracking-[0.2em] text-gray-500">
         <span class="h-0.5 w-8 bg-gray-500"></span>
         Noanet | Soluciones TIC
@@ -57,7 +50,7 @@ const services = [
     <div class="relative z-30 flex flex-col gap-4 lg:items-end lg:pl-12">
       {services.map((service, index) => (
         <article
-          class="service-card w-full border border-white/15 border-l-[3px] border-l-accent bg-white/[0.07] px-5 py-4 backdrop-blur-sm lg:max-w-70"
+          class="service-card w-full border border-white/15 border-l-[3px] border-l-accent bg-navy px-5 py-4 backdrop-blur-sm lg:max-w-70 lg:bg-white/[0.07]"
           style={`animation-delay: ${700 + index * 150}ms`}
         >
           <span class="block text-[0.63rem] font-bold uppercase tracking-[0.15em] text-white/45">{service.label}</span>
@@ -127,8 +120,9 @@ const services = [
   const canvas = document.getElementById('hero-network-canvas') as HTMLCanvasElement | null;
   const hero = document.getElementById('hero');
   const context = canvas?.getContext('2d');
+  const shouldAnimateNetwork = window.matchMedia('(min-width: 1024px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (canvas && hero && context) {
+  if (canvas && hero && context && shouldAnimateNetwork) {
     const networkCanvas = canvas;
     const ctx = context;
     const count = 36;

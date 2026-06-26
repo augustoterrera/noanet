@@ -16,7 +16,7 @@ const solutions = [
     logoClass: 'h-8 w-8',
     logoStyle: '--solution-logo-circle: #691e5a; --solution-logo-triangle: #e62c35;',
     isProduct: true,
-    link: 'https://gesper.vercel.app',
+    link: 'https://gesper.noanet.com.ar',
     external: true
   },
   {
@@ -27,7 +27,7 @@ const solutions = [
     logoClass: 'h-8 w-8',
     logoStyle: '--solution-logo-circle: #2e7552; --solution-logo-triangle: #e62c35;',
     isProduct: true,
-    link: 'https://agromovil.vercel.app',
+    link: 'https://agromovil.noanet.com.ar',
     external: true
   },
   {
@@ -38,7 +38,7 @@ const solutions = [
     logoClass: 'h-8 w-8',
     logoStyle: '--solution-logo-circle: #000000; --solution-logo-triangle: #e62c35;',
     isProduct: true,
-    link: 'https://www.noanet.com.ar/cenit/'
+    link: '#contacto'
   },
   {
     title: 'Conect',
@@ -83,7 +83,7 @@ const solutions = [
     <!-- Solutions grid -->
     <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {solutions.map((solution, index) => (
-        <article 
+        <article
           class="solution-card animate-on-scroll group relative overflow-hidden rounded-xl bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           style={`animation-delay: ${index * 0.1}s`}
         >
@@ -174,8 +174,8 @@ const solutions = [
           </p>
 
           <!-- Link -->
-          <a 
-            href={solution.link} 
+          <a
+            href={solution.link}
             target={solution.external ? '_blank' : undefined}
             rel={solution.external ? 'noopener noreferrer' : undefined}
             class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent transition-colors hover:text-accent-hover"

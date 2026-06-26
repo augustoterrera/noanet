@@ -1,13 +1,121 @@
 ---
+import ogLogo from '../image/noanet-logo-cropped.png';
+
 interface Props {
   title?: string;
   description?: string;
 }
 
-const { 
-  title = 'Noanet - Soluciones Tecnológicas', 
+const {
+  title = 'Noanet - Soluciones Tecnológicas',
   description = 'Soluciones tecnológicas innovadoras y a medida para empresas. TIC, software, conectividad, data center y contact center con más de 20 años de experiencia.'
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogLogo.src, Astro.site).href;
+
+// JSON-LD para reconocimiento de entidad por motores de IA. Datos públicos
+// tomados del sitio y directorios (LinkedIn, Crunchbase, IDEP Tucumán).
+// ponytail: sin coordenadas geo exactas para no inventarlas; agregar geo + openingHours si se confirman.
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${Astro.site}#organization`,
+      name: 'Noanet',
+      legalName: 'Noanet S.A.',
+      url: Astro.site?.href,
+      logo: ogImageURL,
+      image: ogImageURL,
+      description,
+      foundingDate: '1999-02-09',
+      slogan: 'Soluciones tecnológicas innovadoras y a medida para empresas',
+      email: 'comercial@noanet.com.ar',
+      telephone: '+54-810-555-6626',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Marina Alfaro 1110',
+        addressLocality: 'San Miguel de Tucumán',
+        addressRegion: 'Tucumán',
+        postalCode: '4000',
+        addressCountry: 'AR',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+54-810-555-6626',
+        email: 'comercial@noanet.com.ar',
+        contactType: 'sales',
+        areaServed: 'AR',
+        availableLanguage: 'Spanish',
+      },
+      areaServed: { '@type': 'Country', name: 'Argentina' },
+      knowsAbout: [
+        'Tecnologías de la información y la comunicación (TIC)',
+        'Conectividad y redes',
+        'Data Center',
+        'Desarrollo de software a medida',
+        'Contact Center',
+        'Telefonía IP',
+        'Internet inalámbrico',
+      ],
+      sameAs: [
+        'https://www.linkedin.com/company/25039841/',
+        'https://ar.linkedin.com/company/noanetsa',
+        'https://www.instagram.com/noanet_sa/',
+        'https://www.facebook.com/profile.php?id=100078094231185',
+        'https://www.crunchbase.com/organization/noanet-s-a',
+      ],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Soluciones Noanet',
+        itemListElement: [
+          'Desarrollo de software a medida',
+          'Conectividad y redes',
+          'Data Center',
+          'Contact Center omnicanal',
+          'Ciberseguridad',
+          'Internet inalámbrico (Noanet Wifi)',
+        ].map((s) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s } })),
+      },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${Astro.site}#website`,
+      url: Astro.site?.href,
+      name: 'Noanet',
+      inLanguage: 'es-AR',
+      publisher: { '@id': `${Astro.site}#organization` },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Gesper',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      url: 'https://gesper.vercel.app',
+      description: 'Sistema web modular para la gestión total de Recursos Humanos: legajo digital, asistencia, liquidación de sueldos, medicina laboral, capacitación y autogestión.',
+      publisher: { '@id': `${Astro.site}#organization` },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Agromovil',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      url: 'https://agromovil.vercel.app',
+      description: 'Sistema para empresas agrícolas que gestiona asistencia, lotes, tareas, remitos, producción y packing en campo, con operación offline y sincronización posterior.',
+      publisher: { '@id': `${Astro.site}#organization` },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'Cenit',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web',
+      url: 'https://www.noanet.com.ar/cenit/',
+      description: 'Seguimiento vehicular por GPS para transporte de pasajeros, carga o cuadrillas: mapa en tiempo real, reportes, eventos configurables e historial de flota.',
+      publisher: { '@id': `${Astro.site}#organization` },
+    },
+  ],
+};
 ---
 
 <!DOCTYPE html>
@@ -16,11 +124,30 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Noanet" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
     <title>{title}</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
   </head>
   <body class="antialiased">
     <slot />
