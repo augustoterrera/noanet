@@ -8,13 +8,14 @@ import agromovilLogo from '../assets/agromovil-logo.png';
 >
   <div class="container flex items-center justify-between h-[72px]">
 
-    <a href="#" class="flex items-center gap-[10px]">
+    <a href="/" class="flex items-center gap-[10px]" aria-label="Agromovil - Inicio">
       <Image
         src={agromovilLogo}
         alt="Agromovil"
         width={220}
         densities={[1, 2]}
-        class="h-[60px] w-auto"
+        loading="eager"
+        class="h-10 w-auto nav:h-[60px]"
       />
     </a>
 

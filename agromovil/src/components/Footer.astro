@@ -2,9 +2,24 @@
 import { Image } from 'astro:assets';
 import agromovilLogo from '../assets/agromovil-logo.png';
 
-const product = ['Módulos', 'Integraciones', 'Offline bajo demanda', 'Seguridad'];
-const company = ['Noanet', 'Clientes', 'Casos de éxito', 'Contacto'];
-const resources = ['Centro de ayuda', 'Documentación', 'Estado del servicio', 'Blog'];
+const product = [
+  { label: 'Módulos', href: '#modulos' },
+  { label: 'Integraciones', href: '#tecnologias' },
+  { label: 'Offline bajo demanda', href: '#razones' },
+  { label: 'Seguridad', href: '#razones' },
+];
+const company = [
+  { label: 'Noanet', href: '#contacto' },
+  { label: 'Clientes', href: '#clientes' },
+  { label: 'Casos de éxito', href: '#clientes' },
+  { label: 'Contacto', href: '#contacto' },
+];
+const resources = [
+  { label: 'Centro de ayuda', href: '#contacto' },
+  { label: 'Documentación', href: '#contacto' },
+  { label: 'Estado del servicio', href: '#contacto' },
+  { label: 'Blog', href: '#contacto' },
+];
 ---
 
 <footer class="border-t border-[var(--border)] pt-[72px] pb-10 bg-[var(--bg)]">
@@ -30,7 +45,7 @@ const resources = ['Centro de ayuda', 'Documentación', 'Estado del servicio', '
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Producto</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {product.map((item) => (
-            <li><a href={item === 'Módulos' ? '#modulos' : '#'} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -40,7 +55,7 @@ const resources = ['Centro de ayuda', 'Documentación', 'Estado del servicio', '
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Empresa</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {company.map((item) => (
-            <li><a href={item === 'Contacto' ? '#contacto' : '#'} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>
@@ -50,7 +65,7 @@ const resources = ['Centro de ayuda', 'Documentación', 'Estado del servicio', '
         <h5 class="text-[12px] font-bold tracking-[0.08em] uppercase text-[var(--fg-dim)] mb-4">Recursos</h5>
         <ul class="flex flex-col gap-[10px] list-none p-0">
           {resources.map((item) => (
-            <li><a href="#" class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item}</a></li>
+            <li><a href={item.href} class="text-sm text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors duration-150">{item.label}</a></li>
           ))}
         </ul>
       </div>

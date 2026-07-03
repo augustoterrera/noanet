@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import gesperLogo from '../assets/logo-gesper.png';
 ---
 <header
   class="sticky top-0 z-50 border-b border-[var(--border)]"
@@ -7,7 +9,14 @@
   <div class="container flex items-center justify-between h-[72px]">
 
     <a href="/" class="flex items-center gap-[10px]" aria-label="Gesper - Inicio">
-      <img src="/assets/logo-gesper.png" alt="Gesper" class="h-[50px] w-auto" />
+      <Image
+        src={gesperLogo}
+        alt="Gesper"
+        width={220}
+        densities={[1, 2]}
+        loading="eager"
+        class="h-9 w-auto nav:h-[50px]"
+      />
     </a>
 
     <nav class="hidden nav:flex gap-8 items-center" aria-label="Navegación principal">

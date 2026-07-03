@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 interface Props {
   title?: string;
@@ -69,5 +70,6 @@ const siteName = 'Gesper';
   </head>
   <body>
     <slot />
+    <WhatsAppButton />
   </body>
 </html>

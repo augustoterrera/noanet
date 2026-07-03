@@ -140,6 +140,18 @@ const parcelas = Array.from({ length: ROWS }, (_, r) =>
     z-index: 1;
   }
 
+  @media (max-width: 899px) {
+    .hero {
+      min-height: auto;
+    }
+
+    .hero-inner {
+      justify-content: flex-start;
+      padding-top: 7rem;
+      padding-bottom: 5rem;
+    }
+  }
+
   .hero-word-serif {
     font-family: Georgia, serif;
     font-style: italic;
