@@ -12,11 +12,11 @@ import castilloLogo from '../../../shared-assets/clients/castillo.svg';
 
 const clients = [
   { logo: trapaniLogo, alt: 'Trapani' },
-  { logo: agroAlianzaLogo, alt: 'Agro Alianza' },
-  { logo: integralRrhhLogo, alt: 'Integral Recursos Humanos' },
-  { logo: justinianoFriasLogo, alt: 'S.A. Azucarera Justiniano Frias', imgClass: 'h-20 w-auto object-contain max-w-[180px]' },
-  { logo: citromaxLogo, alt: 'Citromax' },
-  { logo: argentiLemonLogo, alt: 'Argenti Lemon' },
+  { logo: agroAlianzaLogo, alt: 'Agro Alianza', width: 180 },
+  { logo: integralRrhhLogo, alt: 'Integral Recursos Humanos', width: 160 },
+  { logo: justinianoFriasLogo, alt: 'S.A. Azucarera Justiniano Frias', imgClass: 'h-20 w-auto object-contain max-w-[180px]', width: 110 },
+  { logo: citromaxLogo, alt: 'Citromax', width: 170 },
+  { logo: argentiLemonLogo, alt: 'Argenti Lemon', width: 180 },
   { logo: grupoMpLogo, alt: 'Grupo MP', label: 'GRUPO MP' },
   { logo: usptLogo, alt: 'USP-T' },
   { logo: castilloLogo, alt: 'Castillo' },
@@ -34,7 +34,10 @@ const clients = [
           <Image
             src={c.logo}
             alt={c.alt}
+            width={c.width}
+            densities={c.width ? [1, 2] : undefined}
             class={`${c.imgClass ?? 'h-14 w-auto object-contain max-w-[180px]'}${c.alt === 'USP-T' ? ' uspt-logo' : ''}`}
+            quality={68}
             loading="eager"
           />
           {c.label && (
