@@ -168,7 +168,7 @@ const modules: Module[] = [
                 alt={m.image.alt}
                 width={520}
                 widths={[320, 420, 520, 720, 960]}
-                loading="lazy"
+                loading="eager"
                 sizes="(min-width: 1240px) 425px, (min-width: 900px) 34vw, calc(100vw - 56px)"
                 class="h-full w-full object-contain"
               />
@@ -580,7 +580,7 @@ const modules: Module[] = [
       imageWrap.classList.add('is-loaded');
     };
 
-    if (image.complete && image.naturalWidth > 0) {
+    if (image.complete) {
       markLoaded();
       return;
     }
@@ -588,6 +588,7 @@ const modules: Module[] = [
     imageWrap.classList.remove('is-loaded');
     imageWrap.classList.add('is-loading');
     image.addEventListener('load', markLoaded, { once: true });
+    image.addEventListener('error', markLoaded, { once: true });
   }
 
   openButtons.forEach((button) => {

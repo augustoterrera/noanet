@@ -100,7 +100,7 @@ const technologies = [
             alt="Resumen visual de tecnologías de Agromovil: control de asistencia, control de producción en campo y georreferencia"
             width={900}
             widths={[420, 640, 900, 1180, 1600]}
-            loading="lazy"
+            loading="eager"
             sizes="(min-width: 900px) 58vw, calc(100vw - 56px)"
             class="h-full w-full object-contain"
           />
@@ -140,7 +140,11 @@ const technologies = [
       </button>
     </div>
 
-    <div class="technologies-lightbox-image">
+    <div class="technologies-lightbox-image is-loading" data-technologies-lightbox-image>
+      <div class="technologies-lightbox-loader" role="status" aria-live="polite">
+        <span class="technologies-lightbox-spinner" aria-hidden="true"></span>
+        <span class="sr-only">Cargando imagen</span>
+      </div>
       <Image
         src={technologiesImage}
         alt="Resumen visual ampliado de tecnologías de Agromovil"
@@ -471,14 +475,72 @@ const technologies = [
   }
 
   .technologies-lightbox-image {
+    position: relative;
     display: grid;
     min-height: 0;
     padding: 16px;
     place-items: center;
+    overflow: hidden;
   }
 
   .technologies-lightbox-image :global(img) {
     max-height: calc(100vh - 120px);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .technologies-lightbox-image.is-loaded :global(img) {
+    opacity: 1;
+  }
+
+  .technologies-lightbox-loader {
+    position: absolute;
+    inset: 16px;
+    z-index: 1;
+    display: grid;
+    gap: 12px;
+    place-content: center;
+    place-items: center;
+    color: var(--fg-muted);
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0)),
+      #f6f7f4;
+    background-size: 180% 100%, auto;
+    pointer-events: none;
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease;
+    animation: technologies-loader-sheen 1.2s ease-in-out infinite;
+  }
+
+  .technologies-lightbox-image.is-loaded .technologies-lightbox-loader {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .technologies-lightbox-spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(30, 30, 36, 0.16);
+    border-top-color: var(--accent);
+    border-radius: 999px;
+    animation: technologies-loader-spin 780ms linear infinite;
+  }
+
+  @keyframes technologies-loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes technologies-loader-sheen {
+    0% {
+      background-position: 160% 0, 0 0;
+    }
+
+    100% {
+      background-position: -60% 0, 0 0;
+    }
   }
 
   @media (min-width: 900px) and (max-width: 1120px) {
@@ -545,7 +607,30 @@ const technologies = [
   const technologiesDialog = document.querySelector<HTMLDialogElement>('[data-technologies-lightbox]');
   const technologiesCloseButton = document.querySelector<HTMLButtonElement>('[data-technologies-lightbox-close]');
 
+  function updateTechnologiesLightboxImageState() {
+    const imageWrap = technologiesDialog?.querySelector<HTMLElement>('[data-technologies-lightbox-image]');
+    const image = imageWrap?.querySelector<HTMLImageElement>('img');
+
+    if (!imageWrap || !image) return;
+
+    const markLoaded = () => {
+      imageWrap.classList.remove('is-loading');
+      imageWrap.classList.add('is-loaded');
+    };
+
+    if (image.complete) {
+      markLoaded();
+      return;
+    }
+
+    imageWrap.classList.remove('is-loaded');
+    imageWrap.classList.add('is-loading');
+    image.addEventListener('load', markLoaded, { once: true });
+    image.addEventListener('error', markLoaded, { once: true });
+  }
+
   technologiesOpenButton?.addEventListener('click', () => {
+    updateTechnologiesLightboxImageState();
     technologiesDialog?.showModal();
   });
 

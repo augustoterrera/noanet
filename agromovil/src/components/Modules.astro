@@ -224,7 +224,7 @@ const modules: Module[] = [
                         alt={moduleImages[0].alt}
                         width={520}
                         widths={[360, 520, 720, 960]}
-                        loading="lazy"
+                        loading="eager"
                         sizes="(min-width: 1240px) 390px, (min-width: 900px) 30vw, calc(100vw - 56px)"
                         class="h-full w-full object-contain"
                       />
@@ -255,7 +255,7 @@ const modules: Module[] = [
                           alt={image.alt}
                           width={420}
                           widths={[260, 360, 420, 640, 840]}
-                          loading="lazy"
+                          loading="eager"
                           sizes="(min-width: 1240px) 360px, (min-width: 900px) 28vw, calc(100vw - 56px)"
                           class="h-full w-full object-contain"
                         />
@@ -295,7 +295,11 @@ const modules: Module[] = [
                         </svg>
                       </button>
                     </div>
-                    <div class:list={['module-lightbox-gallery', !hasFeaturedImage && 'is-phone-gallery']}>
+                    <div class:list={['module-lightbox-gallery', 'is-loading', !hasFeaturedImage && 'is-phone-gallery']} data-lightbox-image>
+                      <div class="module-lightbox-loader" role="status" aria-live="polite">
+                        <span class="module-lightbox-spinner" aria-hidden="true"></span>
+                        <span class="sr-only">Cargando imagen</span>
+                      </div>
                       {moduleImages.filter((image) => image.featured).map((image) => (
                         <figure class="module-lightbox-featured-item">
                           <Image
@@ -355,7 +359,11 @@ const modules: Module[] = [
                           </svg>
                         </button>
                       </div>
-                      <div class="module-lightbox-image">
+                      <div class="module-lightbox-image is-loading" data-lightbox-image>
+                        <div class="module-lightbox-loader" role="status" aria-live="polite">
+                          <span class="module-lightbox-spinner" aria-hidden="true"></span>
+                          <span class="sr-only">Cargando imagen</span>
+                        </div>
                         <Image
                           src={image.src}
                           alt={image.alt}
@@ -715,14 +723,74 @@ const modules: Module[] = [
   }
 
   .module-lightbox-image {
+    position: relative;
     display: grid;
     min-height: 0;
     padding: 16px;
     place-items: center;
+    overflow: hidden;
   }
 
   .module-lightbox-image :global(img) {
     max-height: calc(100vh - 120px);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .module-lightbox-image.is-loaded :global(img),
+  .module-lightbox-gallery.is-loaded :global(img) {
+    opacity: 1;
+  }
+
+  .module-lightbox-loader {
+    position: absolute;
+    inset: 16px;
+    z-index: 2;
+    display: grid;
+    gap: 12px;
+    place-content: center;
+    place-items: center;
+    color: var(--fg-muted);
+    background:
+      linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0)),
+      #f6f7f4;
+    background-size: 180% 100%, auto;
+    pointer-events: none;
+    transition:
+      opacity 180ms ease,
+      visibility 180ms ease;
+    animation: module-loader-sheen 1.2s ease-in-out infinite;
+  }
+
+  .module-lightbox-image.is-loaded .module-lightbox-loader,
+  .module-lightbox-gallery.is-loaded .module-lightbox-loader {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  .module-lightbox-spinner {
+    width: 34px;
+    height: 34px;
+    border: 3px solid rgba(30, 30, 36, 0.16);
+    border-top-color: var(--accent);
+    border-radius: 999px;
+    animation: module-loader-spin 780ms linear infinite;
+  }
+
+  @keyframes module-loader-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes module-loader-sheen {
+    0% {
+      background-position: 160% 0, 0 0;
+    }
+
+    100% {
+      background-position: -60% 0, 0 0;
+    }
   }
 
   .module-gallery-lightbox {
@@ -730,6 +798,7 @@ const modules: Module[] = [
   }
 
   .module-lightbox-gallery {
+    position: relative;
     max-height: calc(100vh - 92px);
     overflow: auto;
     padding: 16px;
@@ -762,6 +831,8 @@ const modules: Module[] = [
     width: 100%;
     height: auto;
     padding: 12px;
+    opacity: 0;
+    transition: opacity 220ms ease;
   }
 
   .module-lightbox-gallery-item {
@@ -776,6 +847,8 @@ const modules: Module[] = [
 
   .module-lightbox-gallery-item :global(img) {
     padding: 12px;
+    opacity: 0;
+    transition: opacity 220ms ease;
   }
 
   .module-lightbox-gallery.is-phone-gallery .module-lightbox-gallery-item {
@@ -812,12 +885,39 @@ const modules: Module[] = [
   const openButtons = document.querySelectorAll<HTMLButtonElement>('[data-lightbox-open]');
   const dialogs = document.querySelectorAll<HTMLDialogElement>('[data-module-dialog]');
 
+  function updateLightboxImageStates(dialog: HTMLDialogElement) {
+    dialog.querySelectorAll<HTMLElement>('[data-lightbox-image]').forEach((imageWrap) => {
+      const images = Array.from(imageWrap.querySelectorAll<HTMLImageElement>('img'));
+
+      if (images.length === 0) return;
+
+      const markLoaded = () => {
+        if (!images.some((image) => image.complete)) return;
+        imageWrap.classList.remove('is-loading');
+        imageWrap.classList.add('is-loaded');
+      };
+
+      if (images.some((image) => image.complete)) {
+        markLoaded();
+        return;
+      }
+
+      imageWrap.classList.remove('is-loaded');
+      imageWrap.classList.add('is-loading');
+      images.forEach((image) => {
+        image.addEventListener('load', markLoaded, { once: true });
+        image.addEventListener('error', markLoaded, { once: true });
+      });
+    });
+  }
+
   openButtons.forEach((button) => {
     button.addEventListener('click', () => {
       const dialogId = button.dataset.lightboxOpen;
       const dialog = dialogId ? document.getElementById(dialogId) : null;
 
       if (dialog instanceof HTMLDialogElement) {
+        updateLightboxImageStates(dialog);
         dialog.showModal();
       }
     });

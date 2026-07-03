@@ -35,7 +35,7 @@ const clients = [
             src={c.logo}
             alt={c.alt}
             class={`${c.imgClass ?? 'h-14 w-auto object-contain max-w-[180px]'}${c.alt === 'USP-T' ? ' uspt-logo' : ''}`}
-            loading="lazy"
+            loading="eager"
           />
           {c.label && (
             <span class="ml-2 text-sm font-bold tracking-widest whitespace-nowrap text-[var(--fg-muted)]">
