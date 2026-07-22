@@ -316,6 +316,7 @@ const marqueeItems = [
 
       form.reset();
       showMessage(success);
+      window.fbq?.('track', 'Lead');
     } catch (err) {
       errorMessage.textContent = err instanceof Error ? err.message : 'No pudimos enviar tu consulta. Probá nuevamente.';
       showMessage(error);

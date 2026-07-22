@@ -1,6 +1,11 @@
 /// <reference path="../.astro/types.d.ts" />
 /// <reference types="astro/client" />
 
+interface Window {
+  /** Meta Pixel. Puede no existir si un bloqueador impide cargar fbevents.js. */
+  fbq?: (...args: unknown[]) => void;
+}
+
 declare namespace NodeJS {
   interface ProcessEnv {
     SMTP_HOST?: string;
