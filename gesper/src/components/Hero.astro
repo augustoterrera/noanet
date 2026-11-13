@@ -74,14 +74,20 @@
         gap: 2.5rem;
     }
 
+    /* Siempre 2 líneas (corte en el <br />): nowrap + tamaño atado al ancho
+       para que la línea más larga (~9.7em) entre sin desbordar. */
     .hero-title {
         font-size: clamp(48px, 7.5vw, 92px);
-        max-width: 16ch;
+        white-space: nowrap;
     }
 
     @media (max-width: 899px) {
         .hero {
             min-height: auto;
+        }
+
+        .hero-title {
+            font-size: 8.4vw;
         }
 
         .hero-inner {
